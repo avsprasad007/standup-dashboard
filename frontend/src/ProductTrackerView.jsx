@@ -109,8 +109,6 @@ export default function ProductTrackerView({
   productTracker,
   searchQuery,
   onInspectCell,
-  onCellMouseEnter,
-  onCellMouseLeave,
 }) {
   const [selectedProduct, setSelectedProduct] = useState('ALL'); // 'ALL' | 'TRM' | 'ERP' | 'KPTCL' | 'Infra & Security'
   const [subView, setSubView] = useState('gantt'); // 'gantt' | 'list' | 'board'
@@ -403,9 +401,7 @@ export default function ProductTrackerView({
                     return (
                       <React.Fragment key={task.id}>
                         <tr
-                          onMouseEnter={(e) => task.source_cell && onCellMouseEnter(e, task.source_cell)}
-                          onMouseLeave={onCellMouseLeave}
-                          onClick={() => task.source_cell && onInspectCell(task.source_cell)}
+                          onClick={() => task.source_cell && onInspectCell && onInspectCell(task.source_cell)}
                           className={`cursor-pointer transition ${
                             isDark ? 'hover:bg-slate-900/60' : 'hover:bg-indigo-50/30'
                           }`}
@@ -776,11 +772,7 @@ export default function ProductTrackerView({
                                     [{task.project}]
                                   </span>
                                   <span
-                                    onClick={() => task.source_cell && onInspectCell(task.source_cell)}
-                                    onMouseEnter={(e) =>
-                                      task.source_cell && onCellMouseEnter(e, task.source_cell)
-                                    }
-                                    onMouseLeave={onCellMouseLeave}
+                                    onClick={() => task.source_cell && onInspectCell && onInspectCell(task.source_cell)}
                                     className="text-sm font-bold hover:underline cursor-pointer"
                                   >
                                     {task.title}
@@ -888,9 +880,7 @@ export default function ProductTrackerView({
                     return (
                       <div
                         key={task.id}
-                        onMouseEnter={(e) => task.source_cell && onCellMouseEnter(e, task.source_cell)}
-                        onMouseLeave={onCellMouseLeave}
-                        onClick={() => task.source_cell && onInspectCell(task.source_cell)}
+                        onClick={() => task.source_cell && onInspectCell && onInspectCell(task.source_cell)}
                         className={`rounded-xl border p-3.5 space-y-2.5 cursor-pointer transition shadow-sm ${
                           isDark
                             ? 'bg-slate-950/90 border-slate-800 hover:border-indigo-500/60'

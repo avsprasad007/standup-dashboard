@@ -146,6 +146,28 @@ export default function App() {
     localStorage.setItem('nsoft_standup_theme', theme);
   }, [theme, isDark]);
 
+  const [currentRoute, setCurrentRoute] = useState(() =>
+    window.location.pathname.startsWith('/project-tracker') ? '/project-tracker' : '/'
+  );
+  const isProjectTrackerPage = currentRoute === '/project-tracker';
+
+  useEffect(() => {
+    const onPopState = () => {
+      setCurrentRoute(
+        window.location.pathname.startsWith('/project-tracker') ? '/project-tracker' : '/'
+      );
+      setHoveredCell(null);
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path);
+    setCurrentRoute(path);
+    setHoveredCell(null);
+  };
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -325,20 +347,55 @@ export default function App() {
             <div>
               <div className="flex items-center gap-2.5">
                 <h1 className="text-base font-bold tracking-tight">
-                  NSoft AI-Native Standup Intelligence Hub
+                  {isProjectTrackerPage
+                    ? 'NSoft Product & Task Tracker'
+                    : 'NSoft AI-Native Standup Intelligence Hub'}
                 </h1>
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[11px] font-semibold border ${
-                    isDark
-                      ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30'
-                      : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                {/* Route Switcher between `/` and `/project-tracker` */}
+                <div
+                  className={`flex items-center rounded-xl p-0.5 border text-xs ${
+                    isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
                   }`}
                 >
-                  3-Day Baseline
-                </span>
+                  <a
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo('/');
+                    }}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition ${
+                      !isProjectTrackerPage
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : isDark
+                        ? 'text-slate-400 hover:text-white'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Standup Hub
+                  </a>
+                  <a
+                    href="/project-tracker"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo('/project-tracker');
+                    }}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition flex items-center gap-1 ${
+                      isProjectTrackerPage
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : isDark
+                        ? 'text-slate-400 hover:text-white'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <Layers className="w-3 h-3" />
+                    <span>/project-tracker</span>
+                  </a>
+                </div>
               </div>
               <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Work Done · Plans for Tomorrow · Learnings Quality &amp; Coaching Telemetry
+                {isProjectTrackerPage
+                  ? 'ClickUp-Style Portfolio Tracker · TRM · ERP · KPTCL · Infra & Security'
+                  : 'Work Done · Plans for Tomorrow · Learnings Quality & Coaching Telemetry'}
               </p>
             </div>
           </div>
@@ -478,140 +535,134 @@ export default function App() {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div
-          className={`max-w-[1600px] mx-auto px-6 flex items-center justify-between border-t ${
-            isDark ? 'border-slate-900 bg-slate-950/60' : 'border-slate-200/80 bg-slate-50/70'
-          }`}
-        >
-          <nav className="flex items-center gap-1 -mb-px overflow-x-auto">
-            <TabButton
-              isDark={isDark}
-              active={activeTab === 'matrix'}
-              onClick={() => setActiveTab('matrix')}
-              icon={Grid}
-              label="People × Days Matrix"
-              badge={`${people.length} × ${days.length}`}
-            />
-            <TabButton
-              isDark={isDark}
-              active={activeTab === 'products'}
-              onClick={() => setActiveTab('products')}
-              icon={Layers}
-              label="Product & Task Tracker"
-              badge="TRM · ERP · KPTCL · Infra"
-            />
-            <TabButton
-              isDark={isDark}
-              active={activeTab === 'pva'}
-              onClick={() => setActiveTab('pva')}
-              icon={GitCompare}
-              label="Plan-vs-Actual Tracker"
-              badge="Yesterday's Plan → Today's Done"
-            />
-            <TabButton
-              isDark={isDark}
-              active={activeTab === 'learning'}
-              onClick={() => setActiveTab('learning')}
-              icon={Sparkles}
-              label="Learning Quality Scorer & Coaching"
-              badge={`${summary.green_learnings}G · ${summary.amber_learnings}A`}
-            />
-            <TabButton
-              isDark={isDark}
-              active={activeTab === 'ingest'}
-              onClick={() => setActiveTab('ingest')}
-              icon={Mail}
-              label="Gmail Sync & raw-emails.md"
-            />
-          </nav>
-
+        {/* Navigation Tabs (only shown on the Standup Hub `/` page) */}
+        {!isProjectTrackerPage && (
           <div
-            className={`hidden xl:flex items-center gap-2 text-[11px] py-2 ${
-              isDark ? 'text-slate-400' : 'text-slate-500'
+            className={`max-w-[1600px] mx-auto px-6 flex items-center justify-between border-t ${
+              isDark ? 'border-slate-900 bg-slate-950/60' : 'border-slate-200/80 bg-slate-50/70'
             }`}
           >
-            <Eye className="w-3.5 h-3.5 text-indigo-500" />
-            <span>
-              <strong>Hover</strong> any cell for raw email · <strong>Click cell</strong> to pin ·{' '}
-              <strong>Click Engineer Name</strong> for 3-Day Journey
-            </span>
+            <nav className="flex items-center gap-1 -mb-px overflow-x-auto">
+              <TabButton
+                isDark={isDark}
+                active={activeTab === 'matrix'}
+                onClick={() => setActiveTab('matrix')}
+                icon={Grid}
+                label="People × Days Matrix"
+                badge={`${people.length} × ${days.length}`}
+              />
+              <TabButton
+                isDark={isDark}
+                active={activeTab === 'pva'}
+                onClick={() => setActiveTab('pva')}
+                icon={GitCompare}
+                label="Plan-vs-Actual Tracker"
+                badge="Yesterday's Plan → Today's Done"
+              />
+              <TabButton
+                isDark={isDark}
+                active={activeTab === 'learning'}
+                onClick={() => setActiveTab('learning')}
+                icon={Sparkles}
+                label="Learning Quality Scorer & Coaching"
+                badge={`${summary.green_learnings}G · ${summary.amber_learnings}A`}
+              />
+              <TabButton
+                isDark={isDark}
+                active={activeTab === 'ingest'}
+                onClick={() => setActiveTab('ingest')}
+                icon={Mail}
+                label="Gmail Sync & raw-emails.md"
+              />
+            </nav>
+
+            <div
+              className={`hidden xl:flex items-center gap-2 text-[11px] py-2 ${
+                isDark ? 'text-slate-400' : 'text-slate-500'
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5 text-indigo-500" />
+              <span>
+                <strong>Hover</strong> any cell for raw email · <strong>Click cell</strong> to pin ·{' '}
+                <strong>Click Engineer Name</strong> for 3-Day Journey
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </header>
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-6 py-5">
-        {activeTab === 'matrix' && (
-          <MatrixView
-            isDark={isDark}
-            days={days}
-            people={people}
-            unreportedRoster={unreported_roster}
-            matrix={matrix}
-            scoreFilter={scoreFilter}
-            setScoreFilter={setScoreFilter}
-            projectFilter={projectFilter}
-            setProjectFilter={setProjectFilter}
-            searchQuery={searchQuery}
-            compactMode={compactMode}
-            setCompactMode={setCompactMode}
-            allProjects={allProjects}
-            showUnreportedRoster={showUnreportedRoster}
-            setShowUnreportedRoster={setShowUnreportedRoster}
-            onCellMouseEnter={handleCellMouseEnter}
-            onCellMouseLeave={handleCellMouseLeave}
-            onCellClick={(cell) => setPinnedCell(cell)}
-            onSelectPersonJourney={(person) => setSelectedPersonJourney(person)}
-          />
-        )}
-
-        {activeTab === 'products' && (
+        {isProjectTrackerPage ? (
           <ProductTrackerView
             isDark={isDark}
             productTracker={product_tracker}
             searchQuery={searchQuery}
             onInspectCell={(cell) => setPinnedCell(cell)}
-            onCellMouseEnter={handleCellMouseEnter}
-            onCellMouseLeave={handleCellMouseLeave}
           />
-        )}
+        ) : (
+          <>
+            {activeTab === 'matrix' && (
+              <MatrixView
+                isDark={isDark}
+                days={days}
+                people={people}
+                unreportedRoster={unreported_roster}
+                matrix={matrix}
+                scoreFilter={scoreFilter}
+                setScoreFilter={setScoreFilter}
+                projectFilter={projectFilter}
+                setProjectFilter={setProjectFilter}
+                searchQuery={searchQuery}
+                compactMode={compactMode}
+                setCompactMode={setCompactMode}
+                allProjects={allProjects}
+                showUnreportedRoster={showUnreportedRoster}
+                setShowUnreportedRoster={setShowUnreportedRoster}
+                onCellMouseEnter={handleCellMouseEnter}
+                onCellMouseLeave={handleCellMouseLeave}
+                onCellClick={(cell) => setPinnedCell(cell)}
+                onSelectPersonJourney={(person) => setSelectedPersonJourney(person)}
+              />
+            )}
 
-        {activeTab === 'pva' && (
-          <PlanVsActualView
-            isDark={isDark}
-            days={days}
-            planVsActual={plan_vs_actual}
-            pvaDayPair={pvaDayPair}
-            setPvaDayPair={setPvaDayPair}
-            pvaStatusFilter={pvaStatusFilter}
-            setPvaStatusFilter={setPvaStatusFilter}
-            searchQuery={searchQuery}
-            onInspectCell={(cell) => setPinnedCell(cell)}
-            onCellMouseEnter={handleCellMouseEnter}
-            onCellMouseLeave={handleCellMouseLeave}
-          />
-        )}
+            {activeTab === 'pva' && (
+              <PlanVsActualView
+                isDark={isDark}
+                days={days}
+                planVsActual={plan_vs_actual}
+                pvaDayPair={pvaDayPair}
+                setPvaDayPair={setPvaDayPair}
+                pvaStatusFilter={pvaStatusFilter}
+                setPvaStatusFilter={setPvaStatusFilter}
+                searchQuery={searchQuery}
+                onInspectCell={(cell) => setPinnedCell(cell)}
+                onCellMouseEnter={handleCellMouseEnter}
+                onCellMouseLeave={handleCellMouseLeave}
+              />
+            )}
 
-        {activeTab === 'learning' && (
-          <LearningQualityView
-            isDark={isDark}
-            days={days}
-            people={people}
-            matrix={matrix}
-            learningFilter={learningFilter}
-            setLearningFilter={setLearningFilter}
-            searchQuery={searchQuery}
-            onInspectCell={(cell) => setPinnedCell(cell)}
-            onCellMouseEnter={handleCellMouseEnter}
-            onCellMouseLeave={handleCellMouseLeave}
-            onCopyText={handleCopyText}
-            copiedId={copiedId}
-          />
-        )}
+            {activeTab === 'learning' && (
+              <LearningQualityView
+                isDark={isDark}
+                days={days}
+                people={people}
+                matrix={matrix}
+                learningFilter={learningFilter}
+                setLearningFilter={setLearningFilter}
+                searchQuery={searchQuery}
+                onInspectCell={(cell) => setPinnedCell(cell)}
+                onCellMouseEnter={handleCellMouseEnter}
+                onCellMouseLeave={handleCellMouseLeave}
+                onCopyText={handleCopyText}
+                copiedId={copiedId}
+              />
+            )}
 
-        {activeTab === 'ingest' && (
-          <GmailIngestView isDark={isDark} onIngestComplete={fetchDashboard} />
+            {activeTab === 'ingest' && (
+              <GmailIngestView isDark={isDark} onIngestComplete={fetchDashboard} />
+            )}
+          </>
         )}
       </main>
 

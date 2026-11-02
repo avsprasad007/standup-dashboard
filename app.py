@@ -166,6 +166,7 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 @app.get("/")
+@app.get("/project-tracker")
 def serve_index():
     if (FRONTEND_DIST_DIR / "index.html").exists():
         return FileResponse(str(FRONTEND_DIST_DIR / "index.html"))
