@@ -565,13 +565,6 @@ export default function App() {
                 label="Learning Quality Scorer & Coaching"
                 badge={`${summary.green_learnings}G · ${summary.amber_learnings}A`}
               />
-              <TabButton
-                isDark={isDark}
-                active={activeTab === 'ingest'}
-                onClick={() => setActiveTab('ingest')}
-                icon={Mail}
-                label="Gmail Sync & raw-emails.md"
-              />
             </nav>
 
             <div
@@ -652,10 +645,6 @@ export default function App() {
                 onCopyText={handleCopyText}
                 copiedId={copiedId}
               />
-            )}
-
-            {activeTab === 'ingest' && (
-              <GmailIngestView isDark={isDark} onIngestComplete={fetchDashboard} />
             )}
           </>
         )}
