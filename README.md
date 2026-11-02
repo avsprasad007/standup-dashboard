@@ -1,22 +1,30 @@
-# Team Emails — Gmail Ingestor
+# NSoft AI Standup Intelligence Hub & Product Tracker
 
-A local web application and Gmail OAuth2 ingestion pipeline that fetches emails from your Gmail account (defaulting to the **last 5 days**), lets you preview and select messages, and appends formatted Markdown into [`raw-emails.md`](./raw-emails.md) with automatic duplicate tracking.
+An AI-native engineering standup & product portfolio dashboard built with **React + Vite + Tailwind CSS** (frontend) and **FastAPI** (optional local parser/Gmail ingestor backend).
 
-## Quick Start
+## Running on Any Machine (Frontend Only — Zero Python / Gmail Setup Needed)
 
-1. **Start the Web UI:**
-   ```bash
-   ./start.sh
-   ```
-   Open **http://127.0.0.1:8765** in your browser.
+The repository includes the pre-parsed dataset ([`frontend/public/standup-dashboard.json`](./frontend/public/standup-dashboard.json)) generated from [`raw-emails.md`](./raw-emails.md). You can clone and run the frontend with just **Node.js**:
 
-2. **Configure Gmail OAuth2 (`credentials.json`):**
-   - Enable the [Gmail API in Google Cloud Console](https://console.cloud.google.com/apis/library/gmail.googleapis.com).
-   - Create an **OAuth client ID** of type **Desktop app** under [Credentials](https://console.cloud.google.com/apis/credentials).
-   - Either place the downloaded file at `/Users/avsprasad/Projects/team-emails/credentials.json` or upload/paste it directly inside the UI's **OAuth Settings** modal.
-   - Click **Authenticate with Google** to authorize read-only Gmail access (`gmail.readonly`). Your token is stored locally in `token.json`.
+```bash
+git clone https://github.com/avsprasad007/standup-dashboard.git
+cd standup-dashboard/frontend
+npm install
+npm run dev
+```
 
-3. **Filter, Select & Ingest:**
-   - The UI defaults to the **Last 5 Days** (with quick toggles for Today, 5d, 7d, 14d, 30d, or custom Start/End dates, plus optional Gmail search syntax like `from:someone@domain.com` or `label:team`).
-   - Preview any email on the right pane, check/uncheck the emails you want, and click **Ingest Selected to raw-emails.md**.
-   - Already-ingested emails are tracked via `<!-- gmail-id: ... -->` markers in `raw-emails.md` so you never accidentally duplicate them.
+Then open:
+- **http://localhost:5173/** — **Standup Intelligence Hub** (People × Days Matrix, Plan-vs-Actual Tracker, Learning Quality Scorer & Coaching Nudges)
+- **http://localhost:5173/project-tracker** — **ClickUp-Style Product & Task Tracker** (`TRM`, `ERP`, `KPTCL`, `Infra & Security` Gantt, AI Product Briefs, Kanban & Telemetry)
+
+---
+
+## Optional: Running with Live `raw-emails.md` Parser (Python Backend)
+
+If you edit [`raw-emails.md`](./raw-emails.md) or want to ingest new emails from Gmail later, start the Python backend (still **does not require** `credentials.json` unless you actively trigger Gmail OAuth):
+
+```bash
+python3 -m venv .venv
+./.venv/bin/pip install -r requirements.txt
+./.venv/bin/uvicorn app:app --host 127.0.0.1 --port 8765 --reload
+```

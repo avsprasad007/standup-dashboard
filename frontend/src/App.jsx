@@ -198,8 +198,11 @@ export default function App() {
   const fetchDashboard = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/standup-dashboard');
-      if (!res.ok) throw new Error('Failed to load standup analysis');
+      let res = await fetch('/api/standup-dashboard').catch(() => null);
+      if (!res || !res.ok) {
+        res = await fetch('/standup-dashboard.json');
+      }
+      if (!res || !res.ok) throw new Error('Failed to load standup analysis');
       const json = await res.json();
       setData(json);
       setError(null);
