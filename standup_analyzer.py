@@ -81,18 +81,6 @@ TEAM_ROSTER: List[Dict[str, Any]] = [
     },
 ]
 
-# Additional NSoft engineers seen on the CtrlS VPN/DC roster who have not sent daily emails yet
-ADDITIONAL_ROSTER: List[Dict[str, str]] = [
-    {"name": "Srinivasa T", "email": "srinivas.babu@nsoft.in"},
-    {"name": "Mahesh M B", "email": "mahesh.mb@nsoft.in"},
-    {"name": "Paramesh C", "email": "paramesh.c@nsoft.in"},
-    {"name": "Veeresh N", "email": "veeresh.n@nsoft.in"},
-    {"name": "M Dharanesh", "email": "dharanesha.m@nsoft.in"},
-    {"name": "Sumanth S.V", "email": "sumanth.sv@nsoft.in"},
-    {"name": "Bhimagoud U Patil", "email": "bhimagoud.u@nsoft.in"},
-    {"name": "B S Karthik", "email": "karthik.bs@nsoft.in"},
-]
-
 CONFIDENTIAL_RE = re.compile(
     r"(--\s*\n)?The content of this email is\s*confidential.*$",
     re.IGNORECASE | re.DOTALL,
@@ -692,7 +680,6 @@ def parse_standup_dashboard() -> Dict[str, Any]:
     return {
         "days": sorted_days,
         "people": TEAM_ROSTER,
-        "unreported_roster": ADDITIONAL_ROSTER,
         "matrix": matrix,
         "plan_vs_actual": plan_vs_actual,
         "product_tracker": _build_product_tracker(matrix, sorted_days),

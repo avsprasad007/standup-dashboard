@@ -178,7 +178,6 @@ export default function App() {
   const [projectFilter, setProjectFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [compactMode, setCompactMode] = useState(false);
-  const [showUnreportedRoster, setShowUnreportedRoster] = useState(false);
 
   // Filters for Plan-vs-Actual
   const [pvaDayPair, setPvaDayPair] = useState('all');
@@ -308,7 +307,6 @@ export default function App() {
   const {
     days = [],
     people = [],
-    unreported_roster = [],
     matrix = {},
     plan_vs_actual = [],
     product_tracker = null,
@@ -607,7 +605,6 @@ export default function App() {
                 isDark={isDark}
                 days={days}
                 people={people}
-                unreportedRoster={unreported_roster}
                 matrix={matrix}
                 scoreFilter={scoreFilter}
                 setScoreFilter={setScoreFilter}
@@ -617,8 +614,6 @@ export default function App() {
                 compactMode={compactMode}
                 setCompactMode={setCompactMode}
                 allProjects={allProjects}
-                showUnreportedRoster={showUnreportedRoster}
-                setShowUnreportedRoster={setShowUnreportedRoster}
                 onCellMouseEnter={handleCellMouseEnter}
                 onCellMouseLeave={handleCellMouseLeave}
                 onCellClick={(cell) => setPinnedCell(cell)}
@@ -1100,7 +1095,6 @@ function MatrixView({
   isDark,
   days,
   people,
-  unreportedRoster,
   matrix,
   scoreFilter,
   setScoreFilter,
@@ -1110,8 +1104,6 @@ function MatrixView({
   compactMode,
   setCompactMode,
   allProjects,
-  showUnreportedRoster,
-  setShowUnreportedRoster,
   onCellMouseEnter,
   onCellMouseLeave,
   onCellClick,
@@ -1193,49 +1185,8 @@ function MatrixView({
               ))}
             </select>
           </div>
-
-          <button
-            onClick={() => setShowUnreportedRoster(!showUnreportedRoster)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 cursor-pointer ${
-              isDark
-                ? 'bg-slate-950 hover:bg-slate-800 border-slate-800 text-slate-300'
-                : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
-            }`}
-          >
-            <span>+{unreportedRoster.length} Unreported Roster</span>
-            {showUnreportedRoster ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-          </button>
         </div>
       </div>
-
-      {/* Collapsible Unreported Roster Callout */}
-      {showUnreportedRoster && (
-        <div
-          className={`p-4 rounded-2xl border space-y-2 ${
-            isDark ? 'bg-slate-900/50 border-slate-800/90' : 'bg-amber-50/60 border-amber-200'
-          }`}
-        >
-          <div className="text-xs font-semibold text-amber-500 flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4" />
-            <span>
-              NSoft Engineers on CtrlS DC/VPN Roster with 0 Daily Reports in raw-emails.md ({unreportedRoster.length}):
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {unreportedRoster.map((u) => (
-              <div
-                key={u.email}
-                className={`px-3 py-1.5 rounded-xl border text-xs flex items-center gap-2 ${
-                  isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-amber-200'
-                }`}
-              >
-                <span className="font-medium">{u.name}</span>
-                <span className="opacity-60 font-mono text-[11px]">{u.email}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* People × Days Matrix Table */}
       <div
