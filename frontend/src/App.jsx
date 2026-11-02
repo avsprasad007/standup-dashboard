@@ -31,6 +31,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import ProductTrackerView from './ProductTrackerView.jsx';
 
 const DAY_LABELS = {
   '2026-10-29': { short: 'Day 1 · Thu, Oct 29', date: '2026-10-29' },
@@ -288,6 +289,7 @@ export default function App() {
     unreported_roster = [],
     matrix = {},
     plan_vs_actual = [],
+    product_tracker = null,
     summary = {},
   } = data || {};
 
@@ -482,7 +484,7 @@ export default function App() {
             isDark ? 'border-slate-900 bg-slate-950/60' : 'border-slate-200/80 bg-slate-50/70'
           }`}
         >
-          <nav className="flex items-center gap-1 -mb-px">
+          <nav className="flex items-center gap-1 -mb-px overflow-x-auto">
             <TabButton
               isDark={isDark}
               active={activeTab === 'matrix'}
@@ -490,6 +492,14 @@ export default function App() {
               icon={Grid}
               label="People × Days Matrix"
               badge={`${people.length} × ${days.length}`}
+            />
+            <TabButton
+              isDark={isDark}
+              active={activeTab === 'products'}
+              onClick={() => setActiveTab('products')}
+              icon={Layers}
+              label="Product & Task Tracker"
+              badge="TRM · ERP · KPTCL · Infra"
             />
             <TabButton
               isDark={isDark}
@@ -553,6 +563,17 @@ export default function App() {
             onCellMouseLeave={handleCellMouseLeave}
             onCellClick={(cell) => setPinnedCell(cell)}
             onSelectPersonJourney={(person) => setSelectedPersonJourney(person)}
+          />
+        )}
+
+        {activeTab === 'products' && (
+          <ProductTrackerView
+            isDark={isDark}
+            productTracker={product_tracker}
+            searchQuery={searchQuery}
+            onInspectCell={(cell) => setPinnedCell(cell)}
+            onCellMouseEnter={handleCellMouseEnter}
+            onCellMouseLeave={handleCellMouseLeave}
           />
         )}
 
