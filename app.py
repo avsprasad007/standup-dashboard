@@ -22,6 +22,7 @@ from standup_analyzer import parse_standup_dashboard
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
+FRONTEND_PUBLIC_DIR = BASE_DIR / "frontend" / "public"
 
 app = FastAPI(title="Team Emails Gmail Ingestor & AI Standup Hub")
 
@@ -126,10 +127,17 @@ def api_ingest(req: IngestRequest):
     if not req.message_ids:
         raise HTTPException(status_code=400, detail="No message IDs selected for ingestion.")
     try:
-        return ingest_emails_to_markdown(
+        res = ingest_emails_to_markdown(
             message_ids=req.message_ids,
             skip_duplicates=req.skip_duplicates,
         )
+        if FRONTEND_PUBLIC_DIR.exists():
+            dashboard_data = parse_standup_dashboard()
+            (FRONTEND_PUBLIC_DIR / "standup-dashboard.json").write_text(
+                json.dumps(dashboard_data, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+        return res
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
 
