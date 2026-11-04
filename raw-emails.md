@@ -310,30 +310,6 @@ this message with any third party, without a written consent of the sender.
 
 ---
 
-<!-- gmail-id: 1a19315fd87f6cfe -->
-## Fwd: certificate
-
-- **From:** Sumukh Hegde <sumukh.hegde@nsoft.in>
-- **To:** Prasad Amara <prasad.amara@nsoft.in>
-- **Date:** Sat, 31 Oct 2026 23:20:41 +0530
-- **Gmail ID:** `1a19315fd87f6cfe`
-
----------- Forwarded message ---------
-From: Sumukh Hegde <sumukh.hegde@nsoft.in>
-Date: Sat, Oct 31, 2026 at 11:14 PM
-Subject: certificate
-To: Sumukh Hegde <sumukh.hegde@nsoft.in>
-
-
-certificate
-
--- 
-The content of this email is confidential and intended for the recipient 
-specified in message only. It is strictly forbidden to share any part of 
-this message with any third party, without a written consent of the sender.
-
----
-
 <!-- gmail-id: 1a193159e26dc81c -->
 ## Re: Daily Work Update - 31-10-2026
 
@@ -1435,1433 +1411,6 @@ this message with any third party, without a written consent of the sender.
 
 ---
 
-<!-- gmail-id: 1a18cee67bd252b2 -->
-## RE: N SOFT - Sales to Delivey support - External Kick off call
-
-- **From:** Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in>
-- **To:** Veera Prathapa Reddy Dwarakacharla <veeraprathapa.dwarakacharla@ctrls.in>, Prasad Amara <prasad.amara@nsoft.in>, Networks PD <networks-pd@ctrls.in>
-- **Cc:** CS Wintel PD <cs-wintelpd@ctrls.in>, Sumukh Hegde <sumukh.hegde@nsoft.in>, Vamshi Kandakatla <vamshi.kandakatla@ctrls.in>, Sumanth Simma <sumanth.simma@ctrls.in>, Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in>, Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in>, Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in>
-- **Date:** Fri, 30 Oct 2026 13:09:48 +0000
-- **Gmail ID:** `1a18cee67bd252b2`
-
-Hi @Prasad Amara<mailto:prasad.amara@nsoft.in>,
-
-As discussed, we have deployed the LB and WAF. Please share the URL details in the attached format.
-
-Also, please confirm on the DR Vlan details.
-
-Thanks & Regards,
-Pranay Kommareddy
-Program Manager – Managed Services
-+91-8712477279
-CtrlS Datacenters Ltd.
-
-From: Kommareddy Pranay Kumar
-Sent: 21 October 2026 14:39
-To: Veera Prathapa Reddy Dwarakacharla <veeraprathapa.dwarakacharla@ctrls.in>; Prasad Amara <prasad.amara@nsoft.in>; Networks PD <networks-pd@ctrls.in>
-Cc: CS Wintel PD <cs-wintelpd@ctrls.in>; Sumukh Hegde <sumukh.hegde@nsoft.in>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in>; Sumanth Simma <sumanth.simma@ctrls.in>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-Hi @Prasad Amara<mailto:prasad.amara@nsoft.in>,
-
-Please find the below details with the public IP and we have allowed the internet and requested communication, kindly check the access and confirm.
-
-
-  *   DNS (UDP/TCP 53) and NTP (UDP 123)
-  *   TCP 80/443
-  *   Application-specific ports, which we'll share once the applications are deployed
-
-
-Hostname
-IP address
-Public IP
-CPU
-Memory
-OS
-OS Disk
-DATA Disk
-vm-sqllegacy
-10.100.1.4
-38.31.196.184
-48
-384GB
-Windows Server 2022 Standard
-511GB
-S: 4096 (4x1TB stripe) | V: 2048 | U: 1024 | L: 512 | T: 256 | E: 1024
-pgvm-prod-vm
-10.110.1.4
-38.31.196.185
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 4096 (4x1TB stripe, PgData) | G: 512 (WAL) | H: 256 (Temp)
-appserver
-10.140.1.5
-38.31.196.186
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 1024 (AppData)
-multi-prod-vm
-10.140.1.4
-38.31.196.187
-8
-64GB
-Windows Server 2022 Standard
-511GB
-E: 512 | F: 1024
-bgcl-prod-vm
-10.130.1.4
-38.31.196.188
-4
-16GB
-Windows Server 2022 Standard
-255GB
-E: 256 (Data)
-dev-vm
-10.150.1.4
-38.31.196.189
-8
-32GB
-Windows Server 2022 Standard
-511GB
-1024 GB (Data)
-
-Thanks & Regards,
-Pranay Kommareddy
-Program Manager – Managed Services
-+91-8712477279
-CtrlS Datacenters Ltd.
-
-From: Veera Prathapa Reddy Dwarakacharla <veeraprathapa.dwarakacharla@ctrls.in<mailto:veeraprathapa.dwarakacharla@ctrls.in>>
-Sent: 21 October 2026 14:17
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Cc: CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-Hi Pranay,
-
-Please find the below natted details and we have allowed the internet and communication. Kindly check and update us.
-
-38.31.196.184-10.100.1.4
-38.31.196.185-10.110.1.4
-38.31.196.186-10.140.1.5
-38.31.196.187-10.140.1.4
-38.31.196.188-10.130.1.4
-38.31.196.189-10.150.1.4
-
-Best Regards,
-Veera Prathap
-Mob:9502506992
-Network & Security Engineer
-CtrlS is India’s First and Asia’s
-largest Tier 4 Datacenter operating
-across India, USA, and UAE
-
-Follow us  on
- [Description: Description: Description: Description: Description: Description: Description: http://www.ctrls.com/email-signature/images/linkedin.jpg] <https://www.linkedin.com/company/ctrls-datacenters-ltd>  [Description: Description: Description: Description: Description: Description: Description: http://www.ctrls.com/email-signature/images/twitter.jpg] <https://twitter.com/CtrlSDC>  [Description: Description: Description: Description: Description: Description: Description: http://www.ctrls.com/email-signature/images/facebook.jpg] <https://www.facebook.com/CtrlSDatacenters>
-
-[Description: Description: Description: Description: Description: Description: Description: Ctrls]              [Description: Description: Description: Description: cid:image006.png@01D4FB5E.E376AC50]
-
-
-CtrlS Datacenters Ltd
-16,Software Units Layout, Madapur (Hitech-City),
-Hyderabad 500081, Telangana, India
-Next Level Escalation :
-Janakiram Reddy.K Mob: +91 8886900227
-
-
-
-
-From: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Sent: 21 October 2026 12:00
-To: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>
-Cc: CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-Hi @Prasad Amara<mailto:prasad.amara@nsoft.in>,
-
-We have created the New Vlan, kindly check the access and confirm.
-
-Also, please let us know for which VM we need to assign the Public IP.
-
-@Networks PD<mailto:networks-pd@ctrls.in>: please allow the below communication and confirm and allow internet access for next one month.
-we'll move to a restricted outbound allowlist. Current requirements:
-
-  *   DNS (UDP/TCP 53) and NTP (UDP 123)
-  *   TCP 80/443
-  *   Application-specific ports, which we'll share once the applications are deployed
-Please also confirm the static public IP these servers will use for outbound traffic.
-
-Hostname
-IP address
-CPU
-Memory
-OS
-OS Disk
-DATA Disk
-vm-sqllegacy
-10.100.1.4
-48
-384GB
-Windows Server 2022 Standard
-511GB
-S: 4096 (4x1TB stripe) | V: 2048 | U: 1024 | L: 512 | T: 256 | E: 1024
-pgvm-prod-vm
-10.110.1.4
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 4096 (4x1TB stripe, PgData) | G: 512 (WAL) | H: 256 (Temp)
-appserver
-10.140.1.5
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 1024 (AppData)
-multi-prod-vm
-10.140.1.4
-8
-64GB
-Windows Server 2022 Standard
-511GB
-E: 512 | F: 1024
-bgcl-prod-vm
-
-10.130.1.4
-16GB
-Windows Server 2022 Standard
-255GB
-E: 256 (Data)
-dev-vm
-10.150.1.4
-8
-32GB
-Windows Server 2022 Standard
-511GB
-1024 GB (Data)
-
-Thanks & Regards,
-Pranay Kommareddy
-Program Manager – Managed Services
-+91-8712477279
-CtrlS Datacenters Ltd.
-
-From: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Sent: 15 October 2026 16:53
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Cc: Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>
-Subject: Re: N SOFT - Sales to Delivey support - External Kick off call
-
-CAUTION: This email originated from outside the organization. Do not click or open attachment unless you recognize the sender and know the content is safe.
-
-Hi Pranay,
-
-We'd also like to change the private IP addresses now, before setup proceeds. The current ranges exactly overlap with our Azure environment, and if we need a site-to-site connection between Azure and CtrlS during the migration, this overlap will be a blocker.
-
-Please re-assign the servers as follows:
-
-[cid:image014.png@01DD689E.0473C3C0]
-
-(Subnets 10.100.1.0/24<http://10.100.1.0/24>, 10.110.1.0/24<http://10.110.1.0/24>, 10.130.1.0/24<http://10.130.1.0/24>, 10.140.1.0/24<http://10.140.1.0/24> and 10.150.1.0/24<http://10.150.1.0/24>, keeping the same per-tier layout as today.)
-
-Please also update the VPN to route the new subnets, and carry over the internet access requested separately to the new ranges.
-We'll share the site-to-site VPN details (Azure gateway IP, encryption parameters) separately when we're ready to set up the tunnel.
-
-Best Regards,
-Prasad
-
-On Thu, Oct 15, 2026 at 11:43 AM Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>> wrote:
-Hi Prasad,
-
-Thanks for joining the call, we will use the chain mail for communication and allowing the access.
-
-@Networks PD<mailto:networks-pd@ctrls.in>: please share the S2S tunnel sheet to establish the communication.
-
-DC VM inventory:
-Hostname
-IP address
-CPU
-Memory
-OS
-OS Disk
-DATA Disk
-vm-sqllegacy
-10.0.1.4
-48
-384GB
-Windows Server 2022 Standard
-511GB
-S: 4096 (4x1TB stripe) | V: 2048 | U: 1024 | L: 512 | T: 256 | E: 1024
-pgvm-prod-vm
-10.10.1.4
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 4096 (4x1TB stripe, PgData) | G: 512 (WAL) | H: 256 (Temp)
-appserver
-10.40.1.5
-16
-128GB
-Windows Server 2022 Standard
-511GB
-F: 1024 (AppData)
-multi-prod-vm
-10.40.1.4
-8
-64GB
-Windows Server 2022 Standard
-511GB
-E: 512 | F: 1024
-bgcl-prod-vm
-10.30.1.4
-4
-16GB
-Windows Server 2022 Standard
-255GB
-E: 256 (Data)
-dev-vm
-10.50.1.4
-8
-32GB
-Windows Server 2022 Standard
-511GB
-1024 GB (Data)
-
-Thanks & Regards,
-Pranay Kommareddy
-Program Manager – Managed Services
-+91-8712477279<tel:+91%2087124%2077279>
-CtrlS Datacenters Ltd.
-
------Original Appointment-----
-From: Kommareddy Pranay Kumar
-Sent: 14 October 2026 18:17
-To: Prasad Amara; Networks PD; CS Wintel PD; Sumanth Simma
-Cc: Sumukh Hegde; Vamshi Kandakatla; Suresh Reddy Vangavarugu; Bhuvana Naagaraj; Jayabharata Reddy Sontam; Karthic Reddy Velkor; Durga Sandesh Rasakatla; Akhila Pinnapureddy
-Subject: N SOFT - Sales to Delivey support - External Kick off call
-When: 15 October 2026 11:00-11:30 (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi.
-Where: Microsoft Teams Meeting
-
-Hi All,
-
-Please join the call using below link at 11:00 AM tomorrow.
-________________________________________________________________________________
-Microsoft Teams meeting
-Join: https://teams.microsoft.com/meet/417383621271686?p=28XVSt73Ihs6Gu29SC
-Meeting ID: 417 383 621 271 686
-Passcode: PW7sQ7N7
-________________________________
-Need help?<https://aka.ms/JoinTeamsMeeting?omkt=en-US> | System reference<https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDhlNmY3MGUtOTIzNi00ZTU3LTkxNmQtYzdiZjM1M2MzYWVm%40thread.v2/0?context=%7b%22Tid%22%3a%229ca4952f-6955-420c-9ee2-0e63ba734325%22%2c%22Oid%22%3a%22a2fbac04-6d37-4ee0-b931-c5291b9d971c%22%7d>
-For organizers: Meeting options<https://teams.microsoft.com/meetingOptions/?organizerId=a2fbac04-6d37-4ee0-b931-c5291b9d971c&tenantId=9ca4952f-6955-420c-9ee2-0e63ba734325&threadId=19_meeting_MDhlNmY3MGUtOTIzNi00ZTU3LTkxNmQtYzdiZjM1M2MzYWVm@thread.v2&messageId=0&language=en-US>
-________________________________________________________________________________
-Thanks & Regards,
-Pranay Kommareddy
-Program Manager – Managed Services
-+91-8712477279<tel:+91%2087124%2077279>
-CtrlS Datacenters Ltd.
-_____________________________________________
-From: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Sent: 14 October 2026 18:03
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Cc: Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: Re: N SOFT - Sales to Delivey support - External Kick off call
-
-CAUTION: This email originated from outside the organization. Do not click or open attachment unless you recognize the sender and know the content is safe.
-
-Hi Pranay,
-
-11 am?
-
-Best Regards,
-Prasad
-________________________________
-From: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Sent: Wednesday, October 14, 2026 12:24 PM
-To: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Cc: Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-Hi Prasad,
-
-
-
-Please let us know your feasible time tomorrow to schedule a call with technical team.
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-From: Kommareddy Pranay Kumar
-Sent: 08 October 2026 18:18
-To: 'Prasad Amara' <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Cc: 'Sumukh Hegde' <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; 'Bhuvana Naagaraj' <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-Hi @'Prasad Amara'<mailto:prasad.amara@nsoft.in>,
-
-
-
-I have shared the DC VMs and VPN details on a separate email, please validate the access and let us know if there are any issues.
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-From: Kommareddy Pranay Kumar
-Sent: 06 October 2026 12:17
-To: 'Prasad Amara' <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Cc: Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-Hi Prasad,
-
-
-
-As discussed, we can create the VLAN details from our end for DR setup. as there is no specific requirement for IP addresses.
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-From: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Sent: 06 October 2026 12:11
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Cc: Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: Re: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-CAUTION: This email originated from outside the organization. Do not click or open attachment unless you recognize the sender and know the content is safe.
-
-
-
-Hi Pranay,
-
-
-
-PFA: Below is the list of users.
-
-No changes required to the VLAN table.
-
-
-
-S.no
-
-User Name
-
-Mail id
-
-1
-
-PRASAD AMARA
-
-prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>
-
-2
-
-SUMUKH HEGDE
-
-sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>
-
-3
-
-DHARMARAJ B
-
-dharmaraj.b@nsoft.in<mailto:dharmaraj.b@nsoft.in>
-
-4
-
-NITISH NAG M
-
-nitishnag.m@nsoft.in<mailto:nitishnag.m@nsoft.in>
-
-5
-
-PRAJWAL D.A
-
-prajwal.da@nsoft.in<mailto:prajwal.da@nsoft.in>
-
-6
-
-PALLAPU RAJESH
-
-pallapu.rajesh@nsoft.in<mailto:pallapu.rajesh@nsoft.in>
-
-7
-
-ROHITH R
-
-rohith.r@nsoft.in<mailto:rohith.r@nsoft.in>
-
-8
-
-UDAY KUMAR V
-
-it@nsoft.in<mailto:it@nsoft.in>
-
-9
-
-NARRA VENKATA SAI
-
-venkata.sai@nsoft.in<mailto:venkata.sai@nsoft.in>
-
-10
-
-CHITRASHREE H R
-
-chitrashree.hr@nsoft.in<mailto:chitrashree.hr@nsoft.in>
-
-11
-
-SANJANA C S
-
-sanjana.cs@nsoft.in<mailto:sanjana.cs@nsoft.in>
-
-12
-
-ANKITH H M
-
-ankith.hm@nsoft.in<mailto:ankith.hm@nsoft.in>
-
-13
-
-SRINIVASA T
-
-srinivas.babu@nsoft.in<mailto:srinivas.babu@nsoft.in>
-
-14
-
-MAHESH M B
-
-mahesh.mb@nsoft.in<mailto:mahesh.mb@nsoft.in>
-
-15
-
-PARAMESH. C
-
-paramesh.c@nsoft.in<mailto:paramesh.c@nsoft.in>
-
-16
-
-VEERESH N.
-
-veeresh.n@nsoft.in<mailto:veeresh.n@nsoft.in>
-
-17
-
-M DHARANESH
-
-dharanesha.m@nsoft.in<mailto:dharanesha.m@nsoft.in>
-
-18
-
-SUMANTH S.V
-
-sumanth.sv@nsoft.in<mailto:sumanth.sv@nsoft.in>
-
-19
-
-BHIMAGOUD U PATIL
-
-bhimagoud.u@nsoft.in<mailto:bhimagoud.u@nsoft.in>
-
-20
-
-B S KARTHIK
-
-karthik.bs@nsoft.in<mailto:karthik.bs@nsoft.in>
-
-
-
-Best Regards,
-
-Prasad
-
-
-
-On Tue, Oct 6, 2026 at 10:31 AM Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>> wrote:
-
-Hi @Prasad Amara<mailto:prasad.amara@nsoft.in>,
-
-
-
-Could you please confirm on the below details.
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-
-
-
-
-From: Kommareddy Pranay Kumar
-Sent: 05 October 2026 16:01
-To: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-Hi @'Prasad Amara'<mailto:prasad.amara@nsoft.in>,
-
-
-
-Please share the VPN User details to create in DC and DR.
-
-
-
-Also, Please confirm the Vlan details for DR setup.
-
-
-
-S.no
-
-User Name
-
-Mail id
-
-1
-
-
-
-
-
-2
-
-
-
-
-
-3
-
-
-
-
-
-4
-
-
-
-
-
-5
-
-
-
-
-
-6
-
-
-
-
-
-7
-
-
-
-
-
-8
-
-
-
-
-
-9
-
-
-
-
-
-10
-
-
-
-
-
-11
-
-
-
-
-
-12
-
-
-
-
-
-13
-
-
-
-
-
-14
-
-
-
-
-
-15
-
-
-
-
-
-16
-
-
-
-
-
-17
-
-
-
-
-
-18
-
-
-
-
-
-19
-
-
-
-
-
-20
-
-
-
-
-
-
-
-Below are the VLAN subnet details in DC for the VMs in BMS sheet, please let us know if there is any change.
-
-VLAN NAME
-
-SUBNET
-
-GATEWAY
-
-USE IPS FROM
-
-INFRA-MGMT
-
-10.0.1.0/24<http://10.0.1.0/24>
-
-10.0.1.1/255.255.255.0<http://10.0.1.1/255.255.255.0>
-
-10.0.1.21-10.0.1.254
-
-APP
-
-10.10.1.0/24<http://10.10.1.0/24>
-
-10.10.1.1/255.255.255.0<http://10.10.1.1/255.255.255.0>
-
-10.10.1.21-10.10.1.254
-
-DB
-
-10.40.1.0/24<http://10.40.1.0/24>
-
-10.40.1.1/255.255.255.0<http://10.40.1.1/255.255.255.0>
-
-10.40.1.21-10.40.1.254
-
-WEB
-
-10.30.1.0/24<http://10.30.1.0/24>
-
-10.30.1.1/255.255.255.0<http://10.30.1.1/255.255.255.0>
-
-10.30.1.21-10.30.1.254
-
-DEV
-
-10.50.1.0/24<http://10.50.1.0/24>
-
-10.50.1.1/255.255.255.0<http://10.50.1.1/255.255.255.0>
-
-10.50.1.21-10.50.1.254
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-From: Kommareddy Pranay Kumar
-Sent: 01 October 2026 16:16
-To: 'Prasad Amara' <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; 'Sumukh Hegde' <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Cc: 'Bhuvana Naagaraj' <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-Hi @'Prasad Amara'<mailto:prasad.amara@nsoft.in>,
-
-
-
-Please share the VPN User details to create in DC and DR.
-
-
-
-S.no
-
-User Name
-
-Mail id
-
-1
-
-
-
-
-
-2
-
-
-
-
-
-3
-
-
-
-
-
-4
-
-
-
-
-
-5
-
-
-
-
-
-6
-
-
-
-
-
-7
-
-
-
-
-
-8
-
-
-
-
-
-9
-
-
-
-
-
-10
-
-
-
-
-
-11
-
-
-
-
-
-12
-
-
-
-
-
-13
-
-
-
-
-
-14
-
-
-
-
-
-15
-
-
-
-
-
-16
-
-
-
-
-
-17
-
-
-
-
-
-18
-
-
-
-
-
-19
-
-
-
-
-
-20
-
-
-
-
-
-
-
-Please confirm the Vlan details for DR setup.
-
-
-
-Also, below are the VLAN subnet details in DC for the VMs in BMS sheet, please let us know if there is any change.
-
-VLAN NAME
-
-SUBNET
-
-GATEWAY
-
-USE IPS FROM
-
-INFRA-MGMT
-
-10.0.1.0/24<http://10.0.1.0/24>
-
-10.0.1.1/255.255.255.0<http://10.0.1.1/255.255.255.0>
-
-10.0.1.21-10.0.1.254
-
-APP
-
-10.10.1.0/24<http://10.10.1.0/24>
-
-10.10.1.1/255.255.255.0<http://10.10.1.1/255.255.255.0>
-
-10.10.1.21-10.10.1.254
-
-DB
-
-10.40.1.0/24<http://10.40.1.0/24>
-
-10.40.1.1/255.255.255.0<http://10.40.1.1/255.255.255.0>
-
-10.40.1.21-10.40.1.254
-
-WEB
-
-10.30.1.0/24<http://10.30.1.0/24>
-
-10.30.1.1/255.255.255.0<http://10.30.1.1/255.255.255.0>
-
-10.30.1.21-10.30.1.254
-
-DEV
-
-10.50.1.0/24<http://10.50.1.0/24>
-
-10.50.1.1/255.255.255.0<http://10.50.1.1/255.255.255.0>
-
-10.50.1.21-10.50.1.254
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-
-
-From: Kommareddy Pranay Kumar
-Sent: 24 September 2026 12:58
-To: 'Prasad Amara' <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; CS Wintel PD <cs-wintelpd@ctrls.in<mailto:cs-wintelpd@ctrls.in>>; CS SQL DBA <CS-sqldba@ctrls.in<mailto:CS-sqldba@ctrls.in>>; CS Oracle DBA <cs-oracledba@ctrls.in<mailto:cs-oracledba@ctrls.in>>; Durga Sandesh Rasakatla <sandesh.r@ctrls.in<mailto:sandesh.r@ctrls.in>>; Akhila Pinnapureddy <akhila.pinnapureddy@ctrls.in<mailto:akhila.pinnapureddy@ctrls.in>>; Networks PD <networks-pd@ctrls.in<mailto:networks-pd@ctrls.in>>; Sumanth Simma <sumanth.simma@ctrls.in<mailto:sumanth.simma@ctrls.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Sanjeevani Subhadra Mishra <sanjeevani.mishra@ctrls.in<mailto:sanjeevani.mishra@ctrls.in>>; Jayabharata Reddy Sontam <jayabharata.sontam@ctrls.in<mailto:jayabharata.sontam@ctrls.in>>; Karthic Reddy Velkor <karthic.velkor@ctrls.in<mailto:karthic.velkor@ctrls.in>>; Venkat Subrahmanyam TS <venkat.subrahmanyam@ctrls.in<mailto:venkat.subrahmanyam@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support - External Kick off call
-
-
-
-Hi All,
-
-
-
-Thanks for joining the call, please find the below MOM.
-
-
-
-Network:
-
-  *   Internet Bandwidth: 100Mbps for DC and 50 Mbps for DR.
-  *   Firewall: DC- 2 Qty and DR- 1Qty. ( 60F)
-  *   LB+WAF: DC- 2 Qty and DR- 1Qty. ( Virtual-NetScaler ) with 100Mbps throughput.
-  *   20 VPN users ( Local users) – confirm whether MFA is required.
-  *   DC-DR Replication Bandwidth is 50 Mbps.
-  *   As confirmed on call, this is not related to any smart metering project, hence we are not considering IPv6 now.
-
-
-
-OS & DB :
-
-  *   As per the BMS we have deploy the VMs in DC – 6Qty and DR – 5 Qty (Dev / Test + RDS) is not required in DR.
-  *   OS: Windows 2022 Standard considered @Vamshi Kandakatla<mailto:vamshi.kandakatla@ctrls.in> : will share the details for standard licenses.
-  *   The VM (Database & Web Server (SQL Server + IIS) is having 384 GB RAM, we recommended for 600GB Page file creation.
-  *   DB : 2 MS SQL 2022, 1 Postgres, N Soft team will deploy the services and confirm.
-  *   DC – DR DB replication need to configure.
-  *   CtrlS will check internally on the Storage level replication and update.
-  *   EDR: Any application, DB level exceptions need to be confirmed by Nsoft team.
-  *   Data Disks: The requested data disk capacity is 4 TB, which exceeds the 2 TB per-disk limit. Therefore, 2 × 2 TB disks can be considered.
-  *   Local Administrator Credentials: Default local server administrator credentials need to be created for all servers. Nsoft to share information of users.
-  *   Backup: File-level and database-level backups need to confirm.
-
-
-
-Below are the VLAN subnet details for the VMs in BMS sheet, please let us know if there is any change.
-
-VLAN NAME
-
-SUBNET
-
-GATEWAY
-
-USE IPS FROM
-
-INFRA-MGMT
-
-10.0.1.0/24<http://10.0.1.0/24>
-
-10.0.1.1/255.255.255.0<http://10.0.1.1/255.255.255.0>
-
-10.0.1.21-10.0.1.254
-
-APP
-
-10.10.1.0/24<http://10.10.1.0/24>
-
-10.10.1.1/255.255.255.0<http://10.10.1.1/255.255.255.0>
-
-10.10.1.21-10.10.1.254
-
-DB
-
-10.40.1.0/24<http://10.40.1.0/24>
-
-10.40.1.1/255.255.255.0<http://10.40.1.1/255.255.255.0>
-
-10.40.1.21-10.40.1.254
-
-WEB
-
-10.30.1.0/24<http://10.30.1.0/24>
-
-10.30.1.1/255.255.255.0<http://10.30.1.1/255.255.255.0>
-
-10.30.1.21-10.30.1.254
-
-DEV
-
-10.50.1.0/24<http://10.50.1.0/24>
-
-10.50.1.1/255.255.255.0<http://10.50.1.1/255.255.255.0>
-
-10.50.1.21-10.50.1.254
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
------Original Appointment-----
-From: Kommareddy Pranay Kumar
-Sent: 23 September 2026 11:45
-To: Kommareddy Pranay Kumar; Prasad Amara; Vamshi Kandakatla; Sumukh Hegde; Suresh Reddy Vangavarugu; CS Wintel PD; CS SQL DBA; CS Oracle DBA; Durga Sandesh Rasakatla; Akhila Pinnapureddy; Networks PD; Sumanth Simma
-Cc: Bhuvana Naagaraj; Sanjeevani Subhadra Mishra; Jayabharata Reddy Sontam; Karthic Reddy Velkor
-Subject: N SOFT - Sales to Delivey support - External Kick off call
-When: 23 September 2026 16:00-16:30 (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi.
-Where: Microsoft Teams Meeting
-
-
-
-Hi All,
-
-
-
-Please join the call using below link at 04:00 PM today.
-
-
-
-Project : NSOFT (INDIA) SERVICES PVT. LTD
-
-Agenda: External kick off call
-
-
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-_____________________________________________
-From: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Sent: 22 September 2026 17:19
-To: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Sanjeevani Subhadra Mishra <sanjeevani.mishra@ctrls.in<mailto:sanjeevani.mishra@ctrls.in>>
-Subject: Re: N SOFT - Sales to Delivey support
-
-
-
-CAUTION: This email originated from outside the organization. Do not click or open attachment unless you recognize the sender and know the content is safe.
-
-
-
-Hi Vamshi,
-
-
-
-What we have in Azure is 2022 DC - azure edition, which is meant only for azure
-
-
-
-Latest version of windows server standard would be suitable for us - do let us know if you any recommendation, else, we can go with standard edition.
-
-
-
-Best Regards,
-
-Prasad
-
-________________________________
-
-From: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>
-Sent: Tuesday, September 22, 2026 11:31 AM
-To: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>; Sanjeevani Subhadra Mishra <sanjeevani.mishra@ctrls.in<mailto:sanjeevani.mishra@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support
-
-
-
-Hi Prasad garu,
-
-
-
-As the OS licenses which you hold are expired/expiring; Sumukh request us to consider OS License.
-
-
-
-As per BMS sheet, you want us to quote the same or do you have any preferred version.
-
-
-
-Best,
-
-Vamshi K
-Manager, Government Sales
-
-[cid:image015.png@01DD689E.0473C3C0][cid:image016.png@01DD689E.0473C3C0]      +91 87126 37819<tel:+91%2087126%2037819>           http://www.ctrls.in/
-
-[A green and black text    AI-generated content may be incorrect.]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-From: Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>
-Sent: 22 September 2026 16:30
-To: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Subject: Re: N SOFT - Sales to Delivey support
-
-
-
-CAUTION: This email originated from outside the organization. Do not click or open attachment unless you recognize the sender and know the content is safe.
-
-
-
-Hi Vamshi,
-
-
-
-Please find attached the BMS sheet capturing our current Azure server configurations (CPU, memory, storage and OS version). Request you to use these as the basis for building the DC setup and deriving the corresponding DR configuration at your end.
-
-
-
-On the SQL Server Deployment questionnaire — request your team to go ahead and complete it, as it largely calls for details specific to your environment and the execution (e.g. virtualization platform, go-live date, etc.). Most of our choices were already shared in the calls prior to the PO; do let us know if you need any specific input from us for the remaining fields.
-
-
-
-Thanks & regards,
-
-
-
-Best Regards,
-
-Prasad
-
-________________________________
-
-From: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>
-Sent: Monday, September 21, 2026 4:46 PM
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Bhuvana Naagaraj <bhuvana.naagaraj@nsoft.in<mailto:bhuvana.naagaraj@nsoft.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support
-
-
-
-Hi Prasad & Sumukh,
-
-
-
-Requesting your quick support.
-
-
-
-Best,
-
-Vamshi K
-Manager, Government Sales
-
-[cid:image015.png@01DD689E.0473C3C0][cid:image016.png@01DD689E.0473C3C0]      +91 87126 37819<tel:+91%2087126%2037819>           http://www.ctrls.in/
-
-[A green and black text    AI-generated content may be incorrect.]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-From: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>
-Sent: 21 September 2026 16:03
-To: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>; Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Venkat Subrahmanyam TS <venkat.subrahmanyam@ctrls.in<mailto:venkat.subrahmanyam@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Subject: RE: N SOFT - Sales to Delivey support
-
-
-
-Hi @Prasad Amara<mailto:prasad.amara@nsoft.in>@Sumukh Hegde<mailto:sumukh.hegde@nsoft.in>,
-
-Please find attached the BMS sheet and DB questionnaires.
-
-  1.  BMS: Kindly fill the sheet and share the required BMS-related details.
-  2.  DB Questionnaires: Please share the details relevant to the DB requirements.
-
-
-
-Thanks & Regards,
-
-Pranay Kommareddy
-
-Program Manager – Managed Services
-
-+91-8712477279<tel:+91%2087124%2077279>
-
-CtrlS Datacenters Ltd.
-
-
-
-From: Vamshi Kandakatla <vamshi.kandakatla@ctrls.in<mailto:vamshi.kandakatla@ctrls.in>>
-Sent: 21 September 2026 14:57
-To: Kommareddy Pranay Kumar <pranaykumar.kommareddy@ctrls.in<mailto:pranaykumar.kommareddy@ctrls.in>>; Prasad Amara <prasad.amara@nsoft.in<mailto:prasad.amara@nsoft.in>>; Sumukh Hegde <sumukh.hegde@nsoft.in<mailto:sumukh.hegde@nsoft.in>>
-Cc: Venkat Subrahmanyam TS <venkat.subrahmanyam@ctrls.in<mailto:venkat.subrahmanyam@ctrls.in>>; Suresh Reddy Vangavarugu <suresh.reddy@ctrls.in<mailto:suresh.reddy@ctrls.in>>
-Subject: N SOFT - Sales to Delivey support
-
-
-
-Dear Prasad and Sumukh,
-
-
-
-Greetings to you.
-
-
-
-I am pleased to connect you with Project Manager who shall assist you further with delivery of the services opted by Nsoft as the PO & TC.
-
-
-
-Project Manager: Pranay Kumar
-
-Mobile: +91-8712477279<tel:+91%2087124%2077279>
-
-
-
-Kindly coordinate and support further.
-
-
-
-@Kommareddy Pranay Kumar<mailto:pranaykumar.kommareddy@ctrls.in> kindly share the BMS and other required data sheet from Nsoft for delivery.
-
-
-
-Thank you in advance.
-
-
-
-
-
-Best,
-
-Vamshi K
-Manager, Government Sales
-
-[cid:image015.png@01DD689E.0473C3C0][cid:image016.png@01DD689E.0473C3C0]      +91 87126 37819<tel:+91%2087126%2037819>           http://www.ctrls.in/
-
-[A green and black text    AI-generated content may be incorrect.]
-
-
-
-
-
-
-
-
-
-
-
-
-
-The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender.
-
-The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender.
-
-The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender.
-
-The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender.
-
-The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender.
-
----
-
 <!-- gmail-id: 1a187f0f85d59f43 -->
 ## Daily Work Report
 
@@ -3401,6 +1950,1212 @@ What I Learned Today:
 While working on the loan logic in Claude, I learned that understanding the
 workflow clearly and having a clear idea of what we want to build makes it
 easier to complete the work.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+
+<!-- gmail-id: 1a1a6c01ccef56dd -->
+## 
+
+- **From:** Kousalya Talari <talari.kousalya@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:59:19 +0530
+- **Gmail ID:** `1a1a6c01ccef56dd`
+
+*1. Work Done Today:*
+
+   -
+
+   Worked on Capital meter DLMS communication.
+   -
+
+   Analysed cumulative energy register readings.
+   -
+
+   Worked on daily consumption calculation for prepaid billing.
+   -
+
+   Continued prepaid billing implementation and testing.
+
+*2. What I Learned Today:*
+
+   -
+
+   Learned about energy register reading and daily consumption calculation
+   in DLMS meters.
+
+*3. Tomorrow’s Plan:*
+
+   -
+
+   Continue Capital meter prepaid billing implementation.
+   -
+
+   Test daily consumption calculation.
+   -
+
+   Resolve pending meter reading issues.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b9f5dcee97a -->
+## Daily Work Status – 04 November 2026
+
+- **From:** Pallapu Rajesh <pallapu.rajesh@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:52:29 +0530
+- **Gmail ID:** `1a1a6b9f5dcee97a`
+
+Hi Sir,
+
+*Today's Work Status *
+
+* Project: TCED*
+
+   1.
+
+   New Consumer Entry and Debit Entry screen modifications have been
+   implemented.
+   2.
+
+   Billing Report modifications have been implemented.
+   3.
+
+   Solar Wheeling Transmission Loss logic modifications are in progress.
+
+*Tomorrow's Planned Activities*
+
+   1.
+
+   Continue the Solar Wheeling Transmission Loss logic and wheeling charges
+   modifications.
+   2.
+
+   Continue the Back Office Bill Generation modifications.
+   3.
+
+   Continue the Complaint Management modifications.
+
+*Learning*
+
+   1.
+
+   Coding and business logic implementation.
+
+-- 
+*Thanks & Regards,*
+*Rajesh P*
+*Software Engineer*
+*N soft India Services Pvt Ltd*
+*Banashankari, Bengaluru, Karnataka 560085*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b809f9a9a08 -->
+## Daily Work Report – 04 November 2026
+
+- **From:** Ankith HM <ankith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:50:29 +0530
+- **Gmail ID:** `1a1a6b809f9a9a08`
+
+*What I did today:*
+
+   1.
+
+   Completed the SQL Server full database restore for GESCOM_LIVE_02042026.
+   2.
+
+   Verified the corresponding differential backup and restarted the
+   differential restore after investigating delays.
+   3.
+
+   Monitored SQL Server restore progress and checked database recovery
+   status.
+   4.
+
+   Checked table details and row-count estimates to help validate the
+   PostgreSQL restoration.
+
+*What i do tomorrow:*
+
+   -
+
+   Complete and verify the SQL Server GESCOM differential restore.
+   -
+
+   Continue PostgreSQL GESCOM restoration and data validation.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b7d6a82fe44 -->
+## Daily Status Update – 04 November 2026
+
+- **From:** Mannuru Lasya <lasya.mannuru@nsoft.in>
+- **To:** Sumukh Hegde <sumukh.hegde@nsoft.in>
+- **Cc:** Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>, Prasad Amara <prasad.amara@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:50:16 +0530
+- **Gmail ID:** `1a1a6b7d6a82fe44`
+
+Dear Sumukh Sir,
+
+Please find my daily status update below.
+
+Work Completed Today:
+- Verified all Pension modules and confirmed that data is being saved
+correctly in each of them.
+- Added a Clear button to the PensionStopExit screen. On click, it resets
+the form, clears all fields, and restores the page to its original state.
+
+Key Learnings:
+- Analyzed and understood the underlying logic of the PensionStopExit
+screen.
+
+Plan for Tomorrow:
+- Deployment of the PensionStopExit screen.
+
+Thanks and regards,
+Lasya.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b70d01b79b0 -->
+## Daily Work Update
+
+- **From:** sanjana cs <sanjana.cs@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:49:23 +0530
+- **Gmail ID:** `1a1a6b70d01b79b0`
+
+Hi Sir,
+
+*Project Name: TCED*
+
+*Today's Work Completed:*
+
+   -
+
+   Tested the calculation logic to ensure accurate advance eligibility,
+   Balance at Credit calculations, and salary deduction amounts.
+   -
+
+   Verified the implemented business conditions and worked on resolving
+   issues identified during testing.
+
+*What I Learned Today:*
+
+   -
+
+   Learned about coding and business logic implementation.
+   -
+
+   Gained a better understanding of calculation validation and testing.
+
+*Tomorrow's Plan:*
+
+   -
+
+   create a new DA Pension Arrears screen in the ERP source.
+   -
+
+   develop the DA Pension Arrears report in the ERP source.
+   -
+
+    implement the required coding, business logic, and report functionality.
+
+*With Regards,*
+*Sanjana C S*
+*Software Engineer*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b5dda15d8e2 -->
+## Daily Task Update
+
+- **From:** Rohith R <rohith.r@nsoft.in>
+- **To:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** PRAJWAL D A <prajwal.da@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:48:07 +0530
+- **Gmail ID:** `1a1a6b5dda15d8e2`
+
+hello Sir,
+
+Tasks Completed Today:
+
+Completed E-Sign Module CHnages in TCED ERP
+
+Resolved Minor Issue in Data load in TCED Online Services(LtNew Connection)
+
+Tasks Planned for Tomorrow:
+
+- Complete the pending taks related to HRMS in TCED ERP
+
+What I Learned Today:
+
+with a clear picture of the desired output,i was able to complete the
+entire module changes in E-sign, learnt that the clear picture and giving a
+more detailed explanation of the same can complete the task
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a6b3a146746b1 -->
+## daily work report
+
+- **From:** Anith HM <anith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 18:45:40 +0530
+- **Gmail ID:** `1a1a6b3a146746b1`
+
+*Today's Work:                               4-11-2026*
+
+   -
+
+   solved the issue in   Annual Incumbency Preparation module, including
+   employee retirement-date and office-mapping checks.
+   -
+
+   Identified test employees and office details for validating the
+   retirement-date filter.
+   -
+
+   Investigated the Gulbarga name issue in the Sanction Strength Report..
+
+*what i learned*:
+
+   -
+
+   Understood how retirement dates and office Location Codes are used to
+   filter employees.
+   -
+
+   Understood how Session variables pass selected office details to the
+   report viewer.
+   -
+
+   Learned the difference between hardcoded report headings and dynamically
+   populated fields in RDLC.
+
+*Pending:*
+
+   -
+
+   Further testing of Annual Incumbency Preparation.
+   -
+
+   Verify the Gulbarga issue after receiving the affected report
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a4ded4ae6f6cb -->
+## Status of the day
+
+- **From:** Rohith R <rohith.r@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>, Sumukh Hegde <sumukh.hegde@nsoft.in>
+- **Cc:** Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 10:13:37 +0530
+- **Gmail ID:** `1a1a4ded4ae6f6cb`
+
+hello Sir,
+
+Tasks Completed Today:
+
+Completed E-Mudhra Integration for HESCOM
+
+Resolved Issue in Data load in TCED Online Services
+
+Tasks Planned for Tomorrow:
+
+- Take Up New task in HESCOM
+
+What I Learned Today:
+
+I did not use claude today as my account weekly limit has been exhausted.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a4db0f160b90e -->
+## Daily Work Update - 03-11-2026
+
+- **From:** Venkata Sai <venkata.sai@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** PRAJWAL D A <prajwal.da@nsoft.in>, Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>
+- **Date:** Wed, 4 Nov 2026 10:09:29 +0530
+- **Gmail ID:** `1a1a4db0f160b90e`
+
+Hi Sir,
+
+Please find below my work update.
+
+------------------------------------------------------------
+(03-11-2026) - Work Done
+------------------------------------------------------------
+
+1. Salary Arrears Report (HRMSalaryArrearsReport)
+   - Added years 2023 and 2024 in the Year dropdown (earlier only 2025 and
+2026).
+
+2. Salary Arrears JV (HRMSalaryArrearsJV)
+   - Added years 2023 and 2024.
+   - Changed design: Employee Name selection moved to the top.
+   - On selecting the employee, Year, From Month and To Month are
+auto-filled.
+   - Org Level and Office are auto-selected based on the login user.
+
+3. ELS Approval (HRMELSApproval)
+   - Applied the new screen design in the main ERP source.
+   - Fixed Net Pay calculation: at the next approval level, Net Pay was
+showing
+     the month-wise total without subtracting the deduction, and changing
+the
+     deduction twice was subtracting it twice.
+     Now Net Pay = Month-wise Total - All Deductions.
+   - Deduction amount can be edited at one level; after it is saved, the
+next
+     levels see it as read-only.
+
+4. Salary Fund Request (HRMSalaryFundRequestNew)
+   - Org Level and Office are auto-selected.
+   - Added BR No (mandatory) and BR Date (today's date only, past and
+future dates are locked).
+   - BR No and BR Date are saved in the existing table B_BRNO (MBRNO,
+MBRDate).
+
+5. Salary Fund Request Approval (HRMSalaryFundRequestApproval)
+   - Showing BR No and BR Date of the bill.
+   - JV grid now shows only Account Head, Debit and Credit.
+   - Added a new Budget grid: Already Allocated, Used and Available amount.
+   - SQL updated: USP_HRMS_SalaryFundRequestApproval
+
+6. Checked why the AAO login was not seeing the fund request in approval.
+   Found it depends on the login office and the user's role order. Not a
+code issue.
+
+------------------------------------------------------------
+(04-11-2026) - Work in Progress
+------------------------------------------------------------
+
+1. Working on Salary JV in HRMS.
+   - Checking the JV creation flow (Debit / Credit account heads, totals).
+   - Checking the approval flow for the JV.
+   - Testing on the dev server.
+
+------------------------------------------------------------
+WHAT I LEARNED
+------------------------------------------------------------
+
+1. How the approval flow works using M_ApprovalManagement (ScreenId, RoleId,
+   RoleOrderId). A bill shows to the next user only when that user's role
+   order is the next one in the flow and the office matches.
+2. How the revenue budget is calculated:
+   Available = Allocated - Used (Used = approved bills of the financial
+year).
+3. Net Pay should always be calculated from the totals
+   (Total - Deductions), not from the previous Net Pay value on the screen.
+   Otherwise the value becomes wrong when the amount is changed again.
+4. BR No / BR Date for the fund request are stored in B_BRNO and linked to
+the
+   bill through B_BillPassing.BRID.
+5. Always take a backup of the file and the stored procedure before
+changing,
+   and test SQL changes inside BEGIN TRAN ... ROLLBACK on dev first.
+6. Before deploying, compare the dev and live versions, because some
+screens and
+   procedures can be different between the servers.
+
+------------------------------------------------------------
+FILES FOR DEPLOYMENT (03-11-2026)
+------------------------------------------------------------
+ERP Files:
+   - HRMSalaryArrearsReport.aspx
+   - HRMSalaryArrearsJV.aspx / .aspx.cs
+   - HRMELSApproval.aspx / .aspx.cs
+   - HRMSalaryFundRequestNew.aspx / .aspx.cs
+   - HRMSalaryFundRequestApproval.aspx / .aspx.cs
+SQL:
+   - USP_HRMS_SalaryFundRequestApproval.sql
+
+Thanks & Regards,
+Venkata Sai
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a19754978bf0b -->
+## Daily Work Update
+
+- **From:** sanjana cs <sanjana.cs@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:56:39 +0530
+- **Gmail ID:** `1a1a19754978bf0b`
+
+Hi Sir,
+
+*Project Name: TCED*
+
+*Today's Work Completed:*
+
+   -
+
+   Implemented the salary deduction calculation based on the sanctioned
+   loan amount for employees.
+   -
+
+   Implemented the eligibility condition to ensure that employees can
+   receive an advance of up to 75% of their Total Subscription.
+   -
+
+   Worked on calculating the Balance at Credit and verifying employee
+   eligibility based on the available balance.
+   -
+
+   Implemented the calculation logic to determine the eligible advance
+   amount for new applications, considering the 75% eligibility limit and
+   existing Balance at Credit.
+
+*What I Learned Today:*
+
+   -
+
+   Learned about coding and business logic implementation.
+
+*Tomorrow's Plan:*
+
+   -
+
+   I will test the calculation logic to ensure accurate advance
+   eligibility, Balance at Credit calculations, and salary deduction amounts.
+   -
+
+   I will verify the implemented business conditions and handle any issues
+   identified during testing.
+
+*With Regards,*
+*Sanjana C S*
+*Software Engineer*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a19487269e37a -->
+## Daily Work Report
+
+- **From:** NITISHNAG M <nitishnag.m@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:53:37 +0530
+- **Gmail ID:** `1a1a19487269e37a`
+
+*Date:* 03-11-2026
+
+*Work Done Today*
+
+*Project: TRM *
+
+1.    E-Mudra LE/LR Screen Modifications
+
+2.    Smart Meter Billing Data Fetch and other issues.
+
+
+
+*Project: TCED*
+
+*1.     *WFM Portal integration
+
+
+
+*Work Planned for Tomorrow*
+
+1.      E-Mudra LE/LR Screen Modifications
+
+*Learnings*
+
+o    Improved coding skills and gained practical experience in business
+logic implementation.
+
+-- 
+*Thanks & Regards*
+
+*Nitish Nag M*
+*NSoft India Service Pvt Ltd.,*
+*Sy No. 17, #580, 30th Main, BSK3rdStage, Bengaluru – 560 085.*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a1936f890db90 -->
+## Daily Work Status – 03 November 2026
+
+- **From:** Pallapu Rajesh <pallapu.rajesh@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:52:21 +0530
+- **Gmail ID:** `1a1a1936f890db90`
+
+Dear Sir,
+
+*Today's Work Status*
+
+*Project: BGCL*
+
+   1.
+
+   Fixed the BPNO generation issue.
+   2.
+
+   Fixed the DPNG reports issue.
+
+*Project: TCED*
+
+   1.
+
+   Modified the Back Office Bill Generation screen and implemented the
+   temporary consumer billing logic.
+   2.
+
+   Modified the Complaint Management screen and implemented the temporary
+   consumer billing logic.
+
+*Tomorrow's Planned Activities – Project: TCED*
+
+   1.
+
+   Continue modifications to the Back Office Bill Generation screen.
+   2.
+
+   Continue modifications to the Complaint Management screen.
+
+*Learning & Development*
+
+   1.
+
+   Focused on coding practices and business logic implementation.
+
+-- 
+*Thanks & Regards,*
+*Rajesh P*
+*Software Engineer*
+*N soft India Services Pvt Ltd*
+*Banashankari, Bengaluru, Karnataka 560085*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a18edb53c7052 -->
+## Daily Work Report
+
+- **From:** Kousalya Talari <talari.kousalya@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:47:24 +0530
+- **Gmail ID:** `1a1a18edb53c7052`
+
+*1. Work Done Today:*
+
+   -
+
+   Worked on prepaid billing implementation for INESH and Capital meters.
+   -
+
+   Analysed meter communication issues and TCP response errors.
+
+*2. What I Learned Today:*
+
+   -
+
+   Learned more about DLMS meter communication and prepaid billing
+   implementation.
+
+*3. Tomorrow’s Plan:*
+
+   -
+
+   Continue prepaid billing implementation.
+   -
+
+   Resolve pending meter communication issues.
+   -
+
+   Test billing deduction and balance update functionality.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a18eceb195ca8 -->
+## Daily Work Report – 03 November 2026
+
+- **From:** Ankith HM <ankith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:47:19 +0530
+- **Gmail ID:** `1a1a18eceb195ca8`
+
+*1. Work Completed Today*
+
+   1.
+
+   Continued database restoration activities and confirmed that 20 SQL
+   Server databases had been successfully restored and were online.
+   2.
+
+   Completed the restoration of ERP_LIVE_31032026 in PPAS 9.5 and verified
+   its tables, views, sequences, and sample records.
+   3.
+
+   Initiated the restoration of GESCOM_LIVE_02042026 and monitored the
+   ongoing data import process.
+
+*2. What I Learned Today*
+
+   1.
+
+   Learned database restoration procedures using SQL Server and
+   PostgreSQL/PPAS 9.5.
+   2.
+
+   Understood how to handle missing database roles using --no-owner and
+   --no-acl options.
+   3.
+
+   Learned to verify database objects, record counts, ownership, and
+   monitor restoration activity using SQL queries.
+
+*3. What i do Tomorrow*
+
+   1.
+
+   Complete the GESCOM_LIVE_02042026 restoration and validate the restored
+   database.
+   2.
+
+   Continue with the pending database restoration activities.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a18d6264c6752 -->
+## Daily Work Update - 03-11-2026
+
+- **From:** Chitrashree HR <chitrashree.hr@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** PRAJWAL D A <prajwal.da@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, Sumukh Hegde <sumukh.hegde@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:45:48 +0530
+- **Gmail ID:** `1a1a18d6264c6752`
+
+Hi Sir,
+
+*Today’s Work:*
+
+   1.
+
+   Worked on the BGCL project CPNG Registration Process.
+
+*Tomorrow’s Plan:   *Continue working on the BGCL project.
+
+*What I Learned:*
+
+   -
+
+   Learned how to identify issues and make changes to the application.
+   -
+
+     Gained an understanding of the CPNG Registration Process, including
+   its workflow, application requirements, data handling, and validations.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a1a188e3c3ece86 -->
+## daily report
+
+- **From:** Anith HM <anith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Tue, 3 Nov 2026 18:40:52 +0530
+- **Gmail ID:** `1a1a188e3c3ece86`
+
+*what i did today:*
+
+   -
+
+   Worked on the Disciplinary Action in HRMS module.
+   -
+
+   Identified and fixed the issue with employee names not loading in the
+   Employee Name dropdown for Division and Section.
+   -
+
+   Updated the stored procedure to retrieve employees based on LocationCode
+   hierarchy.
+
+*What I Learned:*
+
+   -
+
+   Learned how stored procedures work with ASP.NET Web Forms.
+   -
+
+   Understood SQL LIKE and exact matching using =.
+   -
+
+   Learned how BAL, DAL and stored procedures interact.
+
+
+*What i am going to do tomorrow:*
+
+   -
+
+   Work on the Annual Incumbency module.
+   -
+
+   Investigate and resolve the issue where data is not displaying.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c92d119654e0 -->
+## Daily Work Status – 02 November 2026
+
+- **From:** Pallapu Rajesh <pallapu.rajesh@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 19:33:34 +0530
+- **Gmail ID:** `1a19c92d119654e0`
+
+Dear Sir,
+
+*Today's Work Status – Project: TCED*
+
+   1.
+
+   Worked on modifications to the Back Office Bill Generation screen.
+   2.
+
+   Worked on modifications to the Complaint Management screen.
+   3.
+
+   Implemented modifications to the Solar Bill Print functionality.
+
+*Tomorrow's Planned Activities*
+
+   1.
+
+   Continue modifications to the Back Office Bill Generation screen.
+   2.
+
+   Continue modifications to the Complaint Management screen.
+
+*Learning & Development*
+
+   1.
+
+   Focused on coding practices and business logic implementation.
+
+
+-- 
+*Thanks & Regards,*
+*Rajesh P*
+*Software Engineer*
+*N soft India Services Pvt Ltd*
+*Banashankari, Bengaluru, Karnataka 560085*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c8b6d0419aed -->
+## Daily Work Report
+
+- **From:** NITISHNAG M <nitishnag.m@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 19:25:34 +0530
+- **Gmail ID:** `1a19c8b6d0419aed`
+
+*Date:* 02-11-2026
+
+*Work Done Today*
+
+*Project: TRM *
+
+1.    Review of Rural Rebate Issues in TRM
+
+2.    E-Mudra LE/LR Screen Modifications
+
+
+
+*Project: TCED*
+
+*1.     *TCED File updation task modification for TOD Normal , TOD Peak ,
+TOD OffPeak
+
+
+
+*Work Planned for Tomorrow*
+
+1.      E-Mudra LE/LR Screen Modifications
+
+*Learnings*
+
+  Improved coding skills and gained practical experience in business logic
+implementation.
+
+-- 
+*Thanks & Regards*
+
+*Nitish Nag M*
+*NSoft India Service Pvt Ltd.,*
+*Sy No. 17, #580, 30th Main, BSK3rdStage, Bengaluru – 560 085.*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c6b81d7cf3be -->
+## Daily Update – 2 Nov 2026
+
+- **From:** Mannuru Lasya <lasya.mannuru@nsoft.in>
+- **To:** Sumukh Hegde <sumukh.hegde@nsoft.in>
+- **Cc:** Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>, Prasad Amara <prasad.amara@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 18:50:41 +0530
+- **Gmail ID:** `1a19c6b81d7cf3be`
+
+Dear Sumukh Sir,
+
+Please find my daily update below.
+
+What I did today:
+- EmployeeCreationApproval: Resolved the issues; the table now shows unique
+names with no duplicates.
+- EmployeeCreation: Fixed all issues and confirmed data is being saved
+correctly.
+
+What I learnt:
+- Handling duplicate records to display unique values.
+- Tracing save issues end to end to confirm data persists.
+
+What I will do tomorrow:
+- Re-test both screens for regressions and fix any feedback.
+- Continue with the next assigned tasks.
+
+Regards,
+Lasya.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c6a15d34554d -->
+## Daily Work Update
+
+- **From:** sanjana cs <sanjana.cs@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>, Sumukh Hegde <sumukh.hegde@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 18:49:07 +0530
+- **Gmail ID:** `1a19c6a15d34554d`
+
+Hi Sir,
+
+*Project Name: TCED*
+
+*Today's Work Completed:*
+
+   -
+
+   Created reports for Form 3 and Form 4 – Kerala Municipal Pensionable
+   Employees Central Provident Fund applications in ERP Source
+   -
+
+   Implemented report functionality for the Create, Approve, Reject, and
+   Recommend sections.
+
+*What I Learned Today:*
+
+   -
+
+   Learned about coding and business logic implementation.
+
+*Tomorrow's Plan:*
+
+   -
+
+   implement the salary deduction calculation based on the sanctioned loan
+   amount for employees.
+   -
+
+   implement the eligibility condition to ensure that employees can receive
+   an advance of up to 75% of their Total Subscription.
+   -
+
+   work on calculating the Balance at Credit and verifying the employee's
+   eligibility based on the available balance.
+   -
+
+   implement the calculation logic to determine the eligible advance amount
+   when an employee submits a new application, considering the 75% eligibility
+   limit and the existing Balance at Credit.
+
+*With Regards,*
+*Sanjana C S*
+*Software Engineer*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c6784d384dbe -->
+## Daily Work Report
+
+- **From:** Kousalya Talari <talari.kousalya@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 18:46:18 +0530
+- **Gmail ID:** `1a19c6784d384dbe`
+
+*1. Work Done Today:*
+
+   -
+
+   Tested the latest INESH prepaid billing build.
+   -
+
+   Verified daily charge deduction and balance updates.
+   -
+
+   Tested pending billing recovery for missed days.
+   -
+
+   Worked on post-billing PR XML generation and API integration.
+
+*2. What I Learned Today:*
+
+   -
+
+   Learned about billing recovery, prepaid balance updates, and
+   post-billing data handling.
+
+*3. Tomorrow’s Plan:*
+
+   -
+
+   Complete post-billing PR XML generation and API integration.
+   -
+
+   Verify relay status and billing cycle functionality.
+   -
+
+   Continue prepaid billing testing and fix pending issues.
+
+
+
+
+
+
+
+
+
+*With Regards,*
+*Kousalya T*
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c6484523d915 -->
+## Daily Work Report – 02 November 2026
+
+- **From:** Ankith HM <ankith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 18:43:02 +0530
+- **Gmail ID:** `1a19c6484523d915`
+
+1. Work Completed Today
+
+Continued restoring SQL Server databases from the provided backup files .
+
+Successfully restored and verified the following databases:
+Database Name Status Total Tables
+VIZAG_15092023 ONLINE 1,851
+INDIAN_RAILWAY_07062023 ONLINE 1,732
+NSOFTSTORE_29042026 ONLINE 1,239
+SRTPV_BESCOM ONLINE 1,7662. Current Progress
+
+   -
+
+   Total databases in the main backup set: 21
+   -
+
+   Successfully restored: 18
+   -
+
+   Remaining: 3
+
+3. Work Planned for Tomorrow – 03 November 2026
+
+   1.
+
+   Continue restoring the remaining SQL Server databases:
+   -
+
+      MESCOMAMI_05082023
+      -
+
+      TCED_TRM_LIVE_28042026
+      -
+
+      MESCOM_LIVE_28042026
+      2.
+
+   Verify each restored database is ONLINE.
+
+4. Pending Work
+
+   -
+
+   Complete restoration and verification of the remaining SQL Server
+   databases.
+   -
+
+   Complete the separate PostgreSQL GESCOM restoration.
+   -
+
+   Prepare the final database restoration status report.
+
+-- 
+The content of this email is confidential and intended for the recipient 
+specified in message only. It is strictly forbidden to share any part of 
+this message with any third party, without a written consent of the sender.
+
+---
+
+<!-- gmail-id: 1a19c6331885480e -->
+## today work status
+
+- **From:** Anith HM <anith.hm@nsoft.in>
+- **To:** Prasad Amara <prasad.amara@nsoft.in>
+- **Cc:** Sumukh Hegde <sumukh.hegde@nsoft.in>, Dharmaraj B <dharmaraj.b@nsoft.in>, PRAJWAL D A <prajwal.da@nsoft.in>
+- **Date:** Mon, 2 Nov 2026 18:41:36 +0530
+- **Gmail ID:** `1a19c6331885480e`
+
+What I Did Today                            2-11-2026
+-Fixed the new issues of deputation checkbox in both employee creation and
+old employee edit
+-changed the current designation join date from the frontend and backend as
+per the requirement.
+-know about the 3 architectures works in real world application in behind
+the screen
+What I Learnt
+-Understood how to reconfigure frontend input selection logic to prevent
+multiple invalid options from being active.
+-Learnt how to troubleshoot and streamline duplicate data binding issues
+when pulling record profiles during edit states.
+-Discovered the precise data flow dependencies involved when removing an
+active date field across application layers.
+What I Will Do Tomorrow
+-Monitor the updated employee forms to ensure stability and smooth user
+validation transitions.
+-Conduct a final clean code check to ensure no unused data parameters are
+left in the modified layers.
+-Perform cross-browser testing to verify the updated layout elements remain
+properly aligned on the screen.
 
 -- 
 The content of this email is confidential and intended for the recipient 

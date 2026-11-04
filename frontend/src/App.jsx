@@ -37,6 +37,9 @@ const DAY_LABELS = {
   '2026-10-29': { short: 'Day 1 · Thu, Oct 29', date: '2026-10-29' },
   '2026-10-30': { short: 'Day 2 · Fri, Oct 30', date: '2026-10-30' },
   '2026-10-31': { short: 'Day 3 · Sat, Oct 31', date: '2026-10-31' },
+  '2026-11-02': { short: 'Day 4 · Mon, Nov 2', date: '2026-11-02' },
+  '2026-11-03': { short: 'Day 5 · Tue, Nov 3', date: '2026-11-03' },
+  '2026-11-04': { short: 'Day 6 · Wed, Nov 4', date: '2026-11-04' },
 };
 
 function formatDayHeader(dayStr, idx) {
@@ -578,7 +581,7 @@ export default function App() {
               <Eye className="w-3.5 h-3.5 text-indigo-500" />
               <span>
                 <strong>Hover</strong> any cell for raw email · <strong>Click cell</strong> to pin ·{' '}
-                <strong>Click Engineer Name</strong> for 3-Day Journey
+                <strong>Click Engineer Name</strong> for {days.length}-Day Journey
               </span>
             </div>
           </div>
@@ -965,7 +968,7 @@ export default function App() {
             >
               <div>
                 <h3 className="text-base font-bold">
-                  {selectedPersonJourney.name} — 3-Day Engineering Progression
+                  {selectedPersonJourney.name} — {days.length}-Day Engineering Progression
                 </h3>
                 <p className="text-xs opacity-60 font-mono">
                   {selectedPersonJourney.email} · {selectedPersonJourney.role}
@@ -1186,7 +1189,7 @@ function MatrixView({
           isDark ? 'border-slate-800 bg-slate-900/30' : 'border-slate-200 bg-white'
         }`}
       >
-        <table className="w-full border-collapse table-fixed min-w-[1150px]">
+        <table className="w-full border-collapse table-fixed min-w-[1950px]">
           <thead>
             <tr
               className={`border-b text-left ${
@@ -1194,8 +1197,10 @@ function MatrixView({
               }`}
             >
               <th
-                className={`w-[220px] py-3.5 px-4 text-xs font-bold uppercase tracking-wider border-r ${
-                  isDark ? 'text-slate-300 border-slate-800' : 'text-slate-700 border-slate-200'
+                className={`w-[220px] sticky left-0 z-20 py-3.5 px-4 text-xs font-bold uppercase tracking-wider border-r ${
+                  isDark
+                    ? 'text-slate-300 border-slate-800 bg-slate-900'
+                    : 'text-slate-700 border-slate-200 bg-slate-100'
                 }`}
               >
                 Team Member ({people.length})
@@ -1257,12 +1262,12 @@ function MatrixView({
                   {/* Engineer Identity Cell */}
                   <td
                     onClick={() => onSelectPersonJourney(person)}
-                    className={`p-4 border-r cursor-pointer transition ${
+                    className={`p-4 sticky left-0 z-10 border-r cursor-pointer transition ${
                       isDark
-                        ? 'border-slate-800 bg-slate-950/60 hover:bg-slate-900/80'
-                        : 'border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40'
+                        ? 'border-slate-800 bg-slate-950 hover:bg-slate-900'
+                        : 'border-slate-200 bg-slate-50 hover:bg-indigo-50'
                     }`}
-                    title="Click to view 3-Day Engineering Progression"
+                    title={`Click to view ${days.length}-Day Engineering Progression`}
                   >
                     <div className="space-y-2">
                       <div>

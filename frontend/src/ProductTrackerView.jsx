@@ -91,8 +91,9 @@ const DAY_HEADERS = {
   '2026-10-29': { top: 'Oct 29', sub: 'Thu · D1' },
   '2026-10-30': { top: 'Oct 30', sub: 'Fri · D2' },
   '2026-10-31': { top: 'Oct 31', sub: 'Sat · D3' },
-  '2026-11-01': { top: 'Nov 01', sub: 'Sun · D4' },
-  '2026-11-02': { top: 'Nov 02', sub: 'Mon · Plan' },
+  '2026-11-02': { top: 'Nov 02', sub: 'Mon · D4' },
+  '2026-11-03': { top: 'Nov 03', sub: 'Tue · D5' },
+  '2026-11-04': { top: 'Nov 04', sub: 'Wed · D6' },
 };
 
 function getInitials(name) {
@@ -144,18 +145,18 @@ export default function ProductTrackerView({
       ? {
           name: 'All NSoft Products (TRM · ERP · KPTCL · Infra & Security)',
           brief: {
-            title: 'NSoft Engineering Portfolio Brief (Oct 29 – Nov 2)',
+            title: 'NSoft Engineering Portfolio Brief (Oct 29 – Nov 4)',
             agent_author: 'NSoft Portfolio Super Agent',
             overview:
-              'Real-time synthesis of 16 engineering workstreams extracted from 3 days of team standups across TRM (SpotBilling & Smart Metering), ERP (GESCOM/TCED HRMS, Payroll & BGCL), KPTCL, and Infra & Security (DB Restores & CtrlS DC/DR).',
+              'Real-time synthesis of 18 engineering workstreams extracted from 6 days of team standups across TRM (SpotBilling & Smart Metering), ERP (GESCOM/TCED HRMS, Payroll, Municipal PF & BGCL), KPTCL, and Infra & Security (SQL Server & PostgreSQL / PPAS 9.5 DB Restorations).',
             highlights: [
-              'TRM: Nov 2026 SpotBilling App Releases shipped for HESCOM & BWSSB; TCED Back Office Billing updated with DL, wheeling, loss & street light logic.',
-              'ERP: GESCOM HRM Salary Arrears (USP_HRMSalaryArrears) & 4-section Bill Approval UI completed; Aadhaar/PAN live-server path fix verified on HRMS_AdditionalDocumnetsAppr.',
-              'Infra & Security: 8+ SQL databases restored (BESCOMAMI, COCHINPORT, GESCOMAMI) and CtrlS NetScaler LB/WAF + DR subnet IP map finalized.',
+              'TRM: Nov 2026 SpotBilling Apps shipped for HESCOM & BWSSB; TCED Billing updated across 6 tariff rules (DL, wheeling, street light, solar print, temporary consumer, solar wheeling loss); INESH & Capital DLMS prepaid meter billing & PR XML/API integrated.',
+              'ERP: GESCOM HRMS 5-screen delivery (Arrears/JV 2023–24, ELS Approval Net Pay fix, Salary Fund Request B_BRNO & USP_HRMS_SalaryFundRequestApproval); TCED Form 3/4 & 75% advance calculation tested E2E; PensionStopExit & HRMS Disciplinary/Incumbency fixes completed.',
+              'Infra & Security: 20/21 SQL Server databases restored ONLINE + GESCOM_LIVE_02042026 full restore completed + ERP_LIVE_31032026 restored in PostgreSQL/PPAS 9.5 (--no-owner/--no-acl).',
             ],
             risks: [
-              'Infra: Sumukh instructed Ankith HM to publish a complete DB restore report and explicitly include GESCOM on PostgreSQL.',
-              'TRM: Rohith R paused HESCOM Seva Sindhu integration on Oct 30 due to exhausted Claude weekly quota; Kousalya is on Day 3 of INESH duplicate daily charge deduction fix.',
+              'Infra: SQL Server differential restore for GESCOM_LIVE_02042026 restarted on Nov 4 after delays; PostgreSQL GESCOM validation continuing on Nov 5.',
+              'Reporting Continuity: Nitish Nag M, Chitrashree HR, and Venkata Sai (sent Nov 3 update on Nov 4 morning) did not submit a Nov 4 evening report.',
             ],
           },
         }
@@ -349,7 +350,7 @@ export default function ProductTrackerView({
               <div className="flex items-center gap-2.5">
                 <Calendar className="w-4 h-4 text-indigo-500" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  Gantt Workstream Timeline — Oct 29 to Nov 2, 2026
+                  Gantt Workstream Timeline — Oct 29 to Nov 4, 2026 ({timeline_days.length} Reporting Days)
                 </span>
               </div>
               <div className="flex items-center gap-2 text-[11px] opacity-75">
@@ -438,7 +439,12 @@ export default function ProductTrackerView({
                           {/* Timeline Bar Columns */}
                           <td colSpan={timeline_days.length} className="p-0 relative h-14 align-middle">
                             {/* Vertical Day Grid Lines */}
-                            <div className="absolute inset-0 grid grid-cols-5 pointer-events-none">
+                            <div
+                              style={{
+                                gridTemplateColumns: `repeat(${timeline_days.length}, minmax(0, 1fr))`,
+                              }}
+                              className="absolute inset-0 grid pointer-events-none"
+                            >
                               {timeline_days.map((d) => (
                                 <div
                                   key={d}
@@ -546,7 +552,7 @@ export default function ProductTrackerView({
                 <h3 className="text-lg font-bold">{activeBriefProduct.brief.title}</h3>
                 <div className="flex items-center gap-2 mt-1 text-xs opacity-75">
                   <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                  <span>{activeBriefProduct.brief.agent_author} · Live 3-Day Synthesis</span>
+                  <span>{activeBriefProduct.brief.agent_author} · Live {timeline_days.length}-Day Synthesis</span>
                 </div>
               </div>
 

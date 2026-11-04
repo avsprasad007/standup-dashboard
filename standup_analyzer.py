@@ -91,13 +91,20 @@ GENERIC_LEARNING_PATTERNS = [
     r"gained practical experience.*business logic",
     r"learned how to identify issues.*make changes",
     r"learned about coding and business logic",
-    r"focused on coding practices and implementing business logic",
+    r"focused on coding practices.*business logic",
     r"coding and(?: implementing)? business logic",
 ]
 
 TECHNICAL_KEYWORDS = [
     "USP_",
+    "USP_HRMS_SalaryFundRequestApproval",
+    "M_ApprovalManagement",
+    "B_BRNO",
+    "B_BillPassing",
     "HRMS_",
+    "HRMSalaryArrearsJV",
+    "HRMELSApproval",
+    "PensionStopExit",
     "DAEffectiveDateCapture",
     "DLMS",
     "AutoPostBack",
@@ -110,9 +117,16 @@ TECHNICAL_KEYWORDS = [
     "BESCOMAMI",
     "COCHINPORT",
     "GESCOMAMI",
+    "GESCOM_LIVE_02042026",
+    "ERP_LIVE_31032026",
+    "PPAS 9.5",
+    "--no-owner",
+    "--no-acl",
     "PostgreSQL",
     "SQL Server",
     "stored procedure",
+    "LocationCode",
+    "RDLC",
     "Form 3",
     "Form 4",
     "Aadhaar",
@@ -123,6 +137,11 @@ TECHNICAL_KEYWORDS = [
     "prepaid",
     "Basic Difference",
     "CPS",
+    "TOD",
+    "E-Mudra",
+    "E-Sign",
+    "CPNG",
+    "DPNG",
     "Claude",
 ]
 
@@ -189,64 +208,73 @@ def _extract_sections(clean_text: str) -> Tuple[List[str], List[str], List[str]]
     current_bucket: Optional[str] = "work"  # Default initial bucket for Ankith's headerless start
 
     work_header_re = re.compile(
-        r"^(?:\*?\d*\.?\s*)?(?:work\s+done(?:\s+today)?|today['’]?s\s+work(?:\s+completed|\s+status)?|what\s+i\s+did\s+today|tasks\s+completed\s+today|work\s+completed|today['’]?s\s+completed\s+activities)\b[:\-–\s\*]*",
+        r"^(?:\*?\d*\.?\s*)?(?:\(\d{2}-\d{2}-\d{4}\)\s*-\s*work\s+done|work\s+done(?:\s+today)?|today['’]?s\s+work(?:\s+completed|\s+status)?|what\s+i\s+did\s+today|tasks\s+completed\s+today|work\s+completed(?:\s+today)?|today['’]?s\s+completed\s+activities|files\s+for\s+deployment)\b[:\-–\s\*]*",
         re.IGNORECASE,
     )
     plan_header_re = re.compile(
-        r"^(?:\*?\d*\.?\s*)?(?:tomorrow['’]?s\s+plan(?:ned\s+activities)?|work\s+planned\s+for\s+tomorrow|tasks\s+planned\s+for\s+tomorrow|what\s+i\s+(?:will\s+)?do\s+tomorrow)\b[:\-–\s\*]*",
+        r"^(?:\*?\d*\.?\s*)?(?:\(\d{2}-\d{2}-\d{4}\)\s*-\s*work\s+in\s+progress|tomorrow['’]?s\s+plan(?:ned\s+activities)?|plan\s+for\s+tomorrow|work\s+planned\s+for\s+tomorrow|tasks\s+planned\s+for\s+tomorrow|what\s+i\s+(?:will\s+|am\s+going\s+to\s+)?do\s+tomorrow|pending(?:\s+work)?)\b[:\-–\s\*]*",
         re.IGNORECASE,
     )
     learn_header_re = re.compile(
-        r"^(?:\*?\d*\.?\s*)?(?:what\s+i\s+learn(?:ed|t)(?:\s+today)?|learnings?(?:\s+from\s+today|\s*&\s*development)?|today['’]?s\s+learning)\b[:\-–\s\*]*",
+        r"^(?:\*?\d*\.?\s*)?(?:what\s+i\s+learn(?:ed|t)(?:\s+today)?|key\s+learnings?|learnings?(?:\s+from\s+today|\s*&\s*development)?|today['’]?s\s+learning)\b[:\-–\s\*]*",
         re.IGNORECASE,
     )
     signoff_re = re.compile(
-        r"^(?:with\s+regards|thanks\s*&\s*regards|regards|dear\s+sir|hi\s+sir|hello\s+sir|please\s+find\s+below|please\s+find\s+my|--+$)",
+        r"^(?:with\s+regards|thanks\s*(?:&|and)\s*regards|regards|dear\s+(?:sumukh\s+)?sir|hi\s+sir|hello\s+sir|please\s+find\s+below|please\s+find\s+my|--+$)",
         re.IGNORECASE,
     )
 
+    prev_line_blank = False
     for line in lines:
         if not line:
+            prev_line_blank = True
             continue
-        plain = re.sub(r"[\*\_]+", "", line).strip()
+        plain = re.sub(r"\*+", "", line).strip()
         if not plain or re.match(r"^[-=_]{3,}$", plain):
+            prev_line_blank = True
             continue
-        if re.match(r"^(?:date\s*:|daily\s+work\s+report|progress\s+report\s+for\s+day|\d{2}-\d{2}-\d{4}$)", plain, re.I):
+        if re.match(r"^(?:date\s*:|daily\s+work\s+report|progress\s+report\s+for\s+day|\d{1,2}-\d{2}-\d{4}$)", plain, re.I):
+            prev_line_blank = True
             continue
 
         # Check section headers
         if work_header_re.match(plain):
             current_bucket = "work"
             remainder = work_header_re.sub("", plain).strip(" :*-–")
-            if remainder and not re.match(r"^\(\d{2}-\d{2}-\d{4}\)$", remainder):
+            if remainder and not re.match(r"^\(?\d{1,2}-\d{2}-\d{4}\)?$", remainder):
                 work_done.append(remainder)
+            prev_line_blank = True
             continue
         if plan_header_re.match(plain):
             current_bucket = "plan"
             remainder = plan_header_re.sub("", plain).strip(" :*-–")
-            if remainder and not re.match(r"^\(\d{2}-\d{2}-\d{4}\)$", remainder):
+            if remainder and not re.match(r"^\(?\d{1,2}-\d{2}-\d{4}\)?$", remainder):
                 plan_tomorrow.append(remainder)
+            prev_line_blank = True
             continue
         if learn_header_re.match(plain):
             current_bucket = "learn"
             remainder = learn_header_re.sub("", plain).strip(" :*-–")
             if remainder:
                 learnings.append(remainder)
+            prev_line_blank = True
             continue
 
         if signoff_re.match(plain):
             # Stop if we hit signature block at bottom
             if any([work_done, plan_tomorrow, learnings]) and re.match(
-                r"^(?:with\s+regards|thanks\s*&\s*regards|regards)", plain, re.I
+                r"^(?:with\s+regards|thanks\s*(?:&|and)\s*regards|regards)", plain, re.I
             ):
                 break
+            prev_line_blank = True
             continue
 
         # Clean bullet markers
-        bullet_match = re.match(r"^(?:[-•o\*]|\d+[\.\)]|[a-e]\))\s*(.*)", plain)
+        bullet_match = re.match(r"^(?:[-•\*]\s*|o\s+|\d+[\.\)]\s*|[a-e]\)\s+)(.*)", plain)
         is_new_bullet = bool(bullet_match)
         item = bullet_match.group(1).strip() if bullet_match else plain.strip()
         if not item or len(item) <= 2:
+            prev_line_blank = False
             continue
 
         # Sub-heading labels like "Project: TCED" or "TRM SpotBilling"
@@ -263,11 +291,12 @@ def _extract_sections(clean_text: str) -> Tuple[List[str], List[str], List[str]]
             else learnings
         )
 
-        # If this line is a soft-wrapped continuation of the previous bullet (starts lowercase
-        # or previous line didn't end with sentence punctuation and this isn't a new bullet/subheading),
+        # If this line is a soft-wrapped continuation of the previous bullet (no blank line before it,
+        # and starts lowercase or previous line didn't end with sentence punctuation),
         # merge it into the previous bullet!
         if (
             target_list
+            and not prev_line_blank
             and not is_new_bullet
             and not is_subheading
             and (
@@ -278,6 +307,7 @@ def _extract_sections(clean_text: str) -> Tuple[List[str], List[str], List[str]]
             target_list[-1] = f"{target_list[-1]} {item}"
         else:
             target_list.append(item)
+        prev_line_blank = False
 
     return work_done, plan_tomorrow, learnings
 
@@ -288,6 +318,7 @@ def _score_learning(
     learnings: List[str],
     work_done: List[str],
     subject: str,
+    plan_tomorrow: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     Evaluate learning quality:
@@ -311,10 +342,10 @@ def _score_learning(
             "reason": "Reported AI tooling blocker ('did not use Claude today as my account weekly limit has been exhausted') instead of a technical learning.",
             "entities": extracted_entities,
             "is_boilerplate": False,
-            "coaching_nudge": "Good transparency flagging the Claude rate limit—let's get your AI seat/API quota sorted. Even on days without Claude, jot down 1 domain takeaway from HESCOM Seva Sindhu integration.",
+            "coaching_nudge": "Good transparency flagging the Claude rate limit—let's get your AI seat/API quota sorted. Even on days without Claude, jot down 1 domain takeaway from your integration work.",
         }
 
-    # Case 2: No learning section provided (e.g. Ankith on Oct 29 / Oct 31)
+    # Case 2: No learning section provided (e.g. Ankith on Oct 29 / Oct 31 / Nov 2 / Nov 4)
     if not learnings:
         # Check if Ankith mixed learning into work_done on Oct 29
         if "studied the bel" in joined_work.lower():
@@ -325,6 +356,15 @@ def _score_learning(
                 "entities": extracted_entities,
                 "is_boilerplate": False,
                 "coaching_nudge": "Great breakdown of BEL/BAL/DAL and SQL Server backup verification! Next time, add a clear Subject line and separate 'Work Done' from 'What I Learned'.",
+            }
+        if plan_tomorrow:
+            return {
+                "score": "red",
+                "badge": "Missing 'What I Learned' Section",
+                "reason": "Included clear DB restoration status and tomorrow's plan, but omitted the 'What I Learned' section.",
+                "entities": extracted_entities,
+                "is_boilerplate": False,
+                "coaching_nudge": "Great progress on the SQL Server & PostgreSQL database restorations! Please remember to include a 'What I Learned' section in every daily report.",
             }
         return {
             "score": "red",
@@ -341,7 +381,15 @@ def _score_learning(
             # Check if they also included something slightly more specific
             has_specific_clause = any(
                 w in joined_learn.lower()
-                for w in ["form 3", "approval hierarchy", "employee portal", "sql server", "table count"]
+                for w in [
+                    "form 3",
+                    "approval hierarchy",
+                    "employee portal",
+                    "sql server",
+                    "table count",
+                    "cpng",
+                    "calculation validation",
+                ]
             )
             if has_specific_clause:
                 return {
@@ -446,7 +494,7 @@ def parse_standup_dashboard() -> Dict[str, Any]:
         if not lines:
             continue
         gmail_id = lines[0].replace("-->", "").strip()
-        subj_m = re.search(r"^##\s*(.*)", block, re.M)
+        subj_m = re.search(r"^##[ \t]*(.*)", block, re.M)
         from_m = re.search(r"^- \*\*From:\*\*\s*(.*)", block, re.M)
         to_m = re.search(r"^- \*\*To:\*\*\s*(.*)", block, re.M)
         cc_m = re.search(r"^- \*\*Cc:\*\*\s*(.*)", block, re.M)
@@ -520,6 +568,10 @@ def parse_standup_dashboard() -> Dict[str, Any]:
         if s_email == "talari.kousalya@nsoft.in" and day_key == "2026-11-01" and dt.hour < 12:
             day_key = "2026-10-31"
             submitted_late_note = "⏰ Submitted Sun Nov 1 at 7:03 AM (following Sumukh's Sat 11:24 PM reminder)."
+        elif dt.hour < 12:
+            prev_day = (dt - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+            day_key = prev_day
+            submitted_late_note = f"⏰ Submitted next morning ({dt.strftime('%a %d %b, %I:%M %p')})."
 
         days_set.add(day_key)
         clean_text = _clean_body(rep["raw_body"])
@@ -527,7 +579,7 @@ def parse_standup_dashboard() -> Dict[str, Any]:
 
         person_info = roster_map[s_email]
         projects = _detect_projects(clean_text + " " + rep["subject"], person_info["primary_projects"])
-        learning_eval = _score_learning(s_email, day_key, learnings, work_done, rep["subject"])
+        learning_eval = _score_learning(s_email, day_key, learnings, work_done, rep["subject"], plan_tomorrow)
 
         prev_entry = matrix[s_email].get(day_key)
         revision_note = None
@@ -714,17 +766,23 @@ def _evaluate_plan_vs_actual(
 ) -> Tuple[str, str, str]:
     """Compare Day N-1 Plan against Day N Work Done and return (status, badge, commentary)."""
     if not has_curr:
-        if email_addr == "rohith.r@nsoft.in":
+        if email_addr == "rohith.r@nsoft.in" and day_curr == "2026-10-31":
             return (
                 "missing",
                 "Missing Oct 31 Report (Claude Limit on Oct 30)",
                 "Planned to complete HESCOM Seva Sindhu Integration on Oct 31 after exhausting Claude weekly limit on Oct 30, but did not send an Oct 31 report.",
             )
-        if email_addr == "venkata.sai@nsoft.in":
+        if email_addr == "venkata.sai@nsoft.in" and day_curr == "2026-10-31":
             return (
                 "missing",
                 "Missing Oct 31 Report",
                 "Planned to build Salary Fund Request Budget screen & test Salary Arrears E2E on Oct 31, but no Oct 31 email was received.",
+            )
+        if not has_prev:
+            return (
+                "missing",
+                f"No Reports ({day_prev} & {day_curr})",
+                f"No standup report was submitted on either {day_prev} or {day_curr}.",
             )
         return (
             "missing",
@@ -732,11 +790,42 @@ def _evaluate_plan_vs_actual(
             f"Submitted a plan on {day_prev}, but no daily report was received for {day_curr}.",
         )
 
+    if not has_prev:
+        if email_addr == "venkata.sai@nsoft.in" and day_curr == "2026-11-03":
+            return (
+                "aligned",
+                "Returned with Major 5-Screen ERP Delivery",
+                "After missing Oct 31 & Nov 2 reports, delivered his Oct 30 planned Salary Fund Request & Approval screens (B_BRNO, USP_HRMS_SalaryFundRequestApproval) plus Salary Arrears JV/Report (2023–2024) and ELS Approval Net Pay fix.",
+            )
+        if email_addr == "rohith.r@nsoft.in" and day_curr == "2026-11-03":
+            return (
+                "pivoted",
+                "Resumed Reporting (HESCOM E-Mudhra & TCED Data Load)",
+                "After missing Oct 31 & Nov 2 reports, completed E-Mudhra Integration for HESCOM and resolved a data load issue in TCED Online Services (still noting Claude weekly quota exhaustion).",
+            )
+        if email_addr == "chitrashree.hr@nsoft.in" and day_curr == "2026-11-03":
+            return (
+                "aligned",
+                "Resumed BGCL Track (CPNG Registration)",
+                "Returned after missing Nov 2 report and delivered BGCL CPNG Registration Process changes.",
+            )
+        if email_addr == "lasya.mannuru@nsoft.in" and day_curr == "2026-11-04":
+            return (
+                "pivoted",
+                "Completed Employee Track → Started Pension Modules",
+                "After missing Nov 3 report, transitioned from EmployeeCreationApproval to verifying all Pension modules and adding the Clear button on the PensionStopExit screen.",
+            )
+        return (
+            "aligned",
+            f"Resumed Reporting on {day_curr}",
+            f"No prior-day report on {day_prev}, but submitted full work update on {day_curr}.",
+        )
+
     if email_addr == "venkata.sai@nsoft.in" and day_prev == "2026-10-29":
         return (
             "pivoted",
             "Scope Reprioritized (Fund Request Deferred)",
-            "Planned on Oct 29 to work on HRMS Salary Fund Request screen, but pivoted on Oct 30 to deliver deep enhancements on HRM Salary Arrears (USP_HRMSalaryArrears, DP 31% rule) & Employee Salary Bill Approval UI redesign—deferring Salary Fund Request to Oct 31.",
+            "Planned on Oct 29 to work on HRMS Salary Fund Request screen, but pivoted on Oct 30 to deliver deep enhancements on HRM Salary Arrears (USP_HRMSalaryArrears, DP 31% rule) & Employee Salary Bill Approval UI redesign—deferring Salary Fund Request.",
         )
 
     if email_addr == "talari.kousalya@nsoft.in":
@@ -746,10 +835,28 @@ def _evaluate_plan_vs_actual(
                 "Aligned (Multi-Day Prepaid Billing Track)",
                 "Executed directly on her Oct 29 plan: implemented INESH meter prepaid billing, tested daily charge deduction & balance updates, and analyzed continuous billing cycle issues.",
             )
+        if day_prev == "2026-10-30":
+            return (
+                "carryover",
+                "3-Day Carryover (Narrowed to Relay & Duplicate Deduction Bugs)",
+                "Continued the same INESH meter prepaid billing & daily charge deduction track for a 3rd consecutive day, narrowing down tomorrow's plan to fixing relay status updates (DLMS attributes) and preventing duplicate daily charge deduction.",
+            )
+        if day_prev == "2026-10-31":
+            return (
+                "aligned",
+                "Aligned (Billing Recovery + Post-Billing PR XML/API)",
+                "Tested the latest INESH prepaid billing build, verified daily charge deduction & missed-day billing recovery, and began post-billing PR XML generation and API integration.",
+            )
+        if day_prev == "2026-11-02":
+            return (
+                "carryover",
+                "Carryover (Expanded to Capital Meter & TCP Response Errors)",
+                "Continued prepaid billing across both INESH and Capital meters while diagnosing DLMS meter communication and TCP response errors.",
+            )
         return (
-            "carryover",
-            "3-Day Carryover (Narrowed to Relay & Duplicate Deduction Bugs)",
-            "Continued the same INESH meter prepaid billing & daily charge deduction track for a 3rd consecutive day, narrowing down tomorrow's plan to two concrete bugs: fixing relay status updates (DLMS attributes) and preventing duplicate daily charge deduction.",
+            "aligned",
+            "Aligned (Capital Meter DLMS & Daily Consumption)",
+            "Focused on Capital meter DLMS communication, cumulative energy register readings, and daily consumption calculation for prepaid billing.",
         )
 
     if email_addr == "pallapu.rajesh@nsoft.in":
@@ -759,10 +866,28 @@ def _evaluate_plan_vs_actual(
                 "Aligned + Unplanned BGCL Fix",
                 "Continued Back Office Bill Generation & Complaint Management screens (adding wheeling units & transmission loss logic) plus fixed a BGCL leave balance issue.",
             )
+        if day_prev == "2026-10-30":
+            return (
+                "carryover",
+                "3rd Day on Same Screens (Street Light Billing Logic)",
+                "Planned to continue Back Office Bill Generation & Complaint Management screens; implemented street light consumer billing logic in TCED plus fixed BGCL salary generation issues.",
+            )
+        if day_prev == "2026-10-31":
+            return (
+                "carryover",
+                "4th Day on TCED Billing Screens + Solar Bill Print",
+                "Continued modifications to Back Office Bill Generation and Complaint Management screens and added Solar Bill Print modifications.",
+            )
+        if day_prev == "2026-11-02":
+            return (
+                "carryover",
+                "5th Day on TCED Screens (Temporary Consumer) + BGCL BPNO/DPNG",
+                "Implemented temporary consumer billing logic in TCED Back Office Bill Generation & Complaint Management screens, plus fixed BGCL BPNO generation and DPNG report issues.",
+            )
         return (
-            "carryover",
-            "3rd Day on Same Screens (Switched to Street Light Logic)",
-            "Planned to continue Back Office Bill Generation & Complaint Management screens; implemented street light consumer billing logic in TCED plus fixed BGCL salary generation issues, and planned a 4th day on the same two TCED screens.",
+            "pivoted",
+            "Expanded to New Consumer, Debit Entry & Solar Wheeling Loss",
+            "Delivered New Consumer Entry, Debit Entry, and Billing Report modifications in TCED and started Solar Wheeling Transmission Loss logic.",
         )
 
     if email_addr == "chitrashree.hr@nsoft.in":
@@ -776,16 +901,40 @@ def _evaluate_plan_vs_actual(
         if day_prev == "2026-10-29":
             return (
                 "aligned",
-                "Aligned on DB Restores (Dropped C# Study)",
+                "Aligned on DB Restores (Paused C# Study)",
                 "Executed the planned SQL Server database restorations (restored 5 databases and verified table counts), pausing the C# BEL/BAL/DAL study track.",
             )
+        if day_prev == "2026-10-30":
+            return (
+                "pivoted",
+                "Expanded Scope (3 More DBs + TCED ERP Review)",
+                "Planned only to 'Complete the GESCOM integrity check', but actually restored BESCOMAMI, COCHINPORT & GESCOMAMI AND reviewed TCED ERP Employee Creation/Exit C# dropdowns.",
+            )
+        if day_prev == "2026-10-31":
+            return (
+                "aligned",
+                "Answered Sumukh's Directive (18/21 DBs Restored Table)",
+                "Published structured progress table following Sumukh's Oct 31 reminder: restored VIZAG_15092023, INDIAN_RAILWAY_07062023, NSOFTSTORE_29042026 & SRTPV_BESCOM (reaching 18/21 SQL Server DBs ONLINE).",
+            )
+        if day_prev == "2026-11-02":
+            return (
+                "aligned",
+                "Aligned (20 SQL DBs Online + PPAS 9.5 ERP_LIVE & GESCOM_LIVE)",
+                "Reached 20 SQL Server DBs online, completed ERP_LIVE_31032026 restoration in PostgreSQL/PPAS 9.5 (--no-owner/--no-acl), and initiated GESCOM_LIVE_02042026.",
+            )
         return (
-            "pivoted",
-            "Expanded Scope (3 More DBs + TCED ERP Review)",
-            "Planned only to 'Complete the GESCOM integrity check', but actually restored BESCOMAMI, COCHINPORT & GESCOMAMI AND reviewed TCED ERP Employee Creation/Exit C# dropdowns. Sumukh replied reminding him to cover PostgreSQL for GESCOM too.",
+            "aligned",
+            "Aligned (GESCOM_LIVE_02042026 Full + Differential Restore)",
+            "Completed SQL Server full database restore for GESCOM_LIVE_02042026, restarted the differential backup restore after diagnosing delays, and checked row-count estimates for PostgreSQL validation.",
         )
 
     if email_addr == "lasya.mannuru@nsoft.in":
+        if day_prev == "2026-10-31":
+            return (
+                "pivoted",
+                "Post-Deployment Dedup & Save Fixes on Employee Screens",
+                "Planned deployment of Employee modules on Oct 31; on Nov 2 resolved duplicate name display in EmployeeCreationApproval and verified end-to-end save persistence in EmployeeCreation.",
+            )
         return (
             "aligned",
             "100% Plan-to-Actual Execution",
@@ -799,17 +948,35 @@ def _evaluate_plan_vs_actual(
                 "Aligned (SQL Tables + Flag-Based CRUD Stored Proc)",
                 "Created the planned SQL Server relational tables, wrote the flag-based CRUD stored procedure, and wired C# AutoPostBack & dropdown bindings.",
             )
+        if day_prev == "2026-10-30":
+            return (
+                "pivoted",
+                "Pivoted to HRMS Bug Fixes (as Planned in Day 2 Learning)",
+                "Transitioned from his sandbox form into real HRMS Issue Solving: fixed the deputation checkbox bug, double language display issue, and designation join date across frontend and backend.",
+            )
+        if day_prev == "2026-10-31":
+            return (
+                "carryover",
+                "Continued Deputation Checkbox & Join Date Refinements",
+                "Fixed newly surfaced edge cases in the deputation checkbox across new/edit employee flows and updated the current designation join date per requirement.",
+            )
+        if day_prev == "2026-11-02":
+            return (
+                "pivoted",
+                "Assigned to HRMS Disciplinary Action Module",
+                "Completed Employee form stabilization and tackled HRMS Disciplinary Action—fixing Division/Section Employee Name dropdown loading via LocationCode hierarchy in the stored procedure.",
+            )
         return (
-            "pivoted",
-            "Pivoted to HRMS Bug Fixes (as Planned in Day 2 Learning)",
-            "Transitioned from his sandbox form into real HRMS Issue Solving: fixed the deputation checkbox bug, double language display issue, and designation join date across frontend and backend.",
+            "aligned",
+            "100% Aligned (Annual Incumbency & Sanction Strength Report)",
+            "Executed directly on his Nov 3 plan: resolved the Annual Incumbency Preparation retirement-date and office-mapping issues, and investigated the Gulbarga name issue in the RDLC Sanction Strength Report.",
         )
 
     if email_addr == "sanjana.cs@nsoft.in":
         return (
             "aligned",
-            "Aligned (Form 3 & Form 4 Progression)",
-            "Steadily progressed from Form 3 Employee Portal screen (Oct 29) → Form 4 ERP screen & approval hierarchy (Oct 30) → Form 3 & Form 4 reports in Employee Portal (Oct 31).",
+            "100% Plan-to-Actual Execution (TCED PF Module)",
+            f"Executed directly on her {day_prev} plan—progressing systematically from Form 3/4 Portal & ERP screens → Create/Approve/Reject/Recommend reports → 75% Total Subscription & Balance at Credit calculation logic → E2E calculation testing.",
         )
 
     if email_addr == "nitishnag.m@nsoft.in":
@@ -819,17 +986,35 @@ def _evaluate_plan_vs_actual(
                 "Aligned (BWSSB SpotBilling + Smart Metering)",
                 "Delivered both planned tracks: BWSSB SpotBilling (EMI remarks for interest penalty, disabling SIR deputation option) and TRM Smart Metering (Meter Burnt/Not Running cases).",
             )
+        if day_prev == "2026-10-30":
+            return (
+                "aligned",
+                "Aligned (Nov 2026 App Releases Shipped)",
+                "Shipped the planned Nov 2026 app releases for HESCOM and BWSSB Spot Billing, modified Weavers rebate LT-5 R DBT tariff logic, and attended the EMudra LE/LR integration meeting.",
+            )
+        if day_prev == "2026-10-31":
+            return (
+                "aligned",
+                "Aligned (E-Mudra LE/LR Screens + TCED TOD Tariff)",
+                "Delivered E-Mudra LE/LR screen modifications, reviewed TRM Rural Rebate issues, and updated TCED file updation task for TOD Normal, TOD Peak, and TOD OffPeak.",
+            )
         return (
             "aligned",
-            "Aligned (Nov 2026 App Releases Shipped)",
-            "Shipped the planned Nov 2026 app releases for HESCOM and BWSSB Spot Billing, modified Weavers rebate LT-5 R DBT tariff logic, and attended the EMudra LE/LR integration meeting.",
+            "Aligned (E-Mudra LE/LR + Smart Meter Fetch + TCED WFM)",
+            "Continued planned E-Mudra LE/LR screen modifications, resolved Smart Meter Billing Data Fetch issues, and worked on TCED WFM Portal integration.",
         )
 
     if email_addr == "rohith.r@nsoft.in":
+        if day_prev == "2026-10-29":
+            return (
+                "carryover",
+                "Started Planned Task (Slowed by Claude Limit)",
+                "Planned to complete HESCOM Seva Sindhu Integration; started it on Oct 30 and carried completion over to tomorrow after hitting his Claude weekly usage limit.",
+            )
         return (
-            "carryover",
-            "Started Planned Task (Slowed by Claude Limit)",
-            "Planned to complete HESCOM Seva Sindhu Integration; started it on Oct 30 and carried completion over to tomorrow after hitting his Claude weekly usage limit.",
+            "pivoted",
+            "Delivered TCED E-Sign Module & LT New Connection Fix",
+            "Planned to take up a new HESCOM task, and pivoted to completing E-Sign Module changes in TCED ERP and fixing a data load issue in TCED Online Services (LT New Connection) with Claude access restored.",
         )
 
     return (
@@ -845,7 +1030,7 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
       1. TRM (Total Revenue Management, SpotBilling & Smart Metering)
       2. ERP (HRMS, Payroll/Arrears, Employee Portal, Municipal PF, BGCL & DCW)
       3. KPTCL (Karnataka Power Transmission Corp. Reports & App Issues)
-      4. Infra & Security (SQL/PostgreSQL DB Restores, CtrlS DC/DR Migration, LB/WAF & VPN)
+      4. Infra & Security (SQL Server & PostgreSQL / PPAS 9.5 Database Restorations & Recovery)
     """
     products = [
         {
@@ -857,20 +1042,20 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
                 "TCED Billing & Demand",
                 "HESCOM SpotBilling & Integrations",
                 "BWSSB SpotBilling",
-                "Smart Metering (INESH / CMRL / EMudra)",
+                "Smart Metering (INESH / Capital / CMRL / EMudra)",
             ],
             "brief": {
-                "title": "TRM Product Brief & Active Sprint",
+                "title": "TRM Product Brief & Active Sprint (Oct 29 – Nov 4)",
                 "agent_author": "TRM Delivery Agent",
-                "overview": "Covers utility revenue billing, Android spot-billing releases (HESCOM, BWSSB), TCED back-office tariff/billing logic, and smart/prepaid meter integrations (INESH DLMS, CMRL, EMudra).",
+                "overview": "Covers utility revenue billing, Android spot-billing releases (HESCOM, BWSSB), TCED back-office tariff/billing logic (TOD, Solar Wheeling, Street Light, Temporary Consumer), and smart/prepaid meter integrations (INESH & Capital DLMS, CMRL, E-Mudra).",
                 "highlights": [
-                    "Shipped Nov 2026 SpotBilling App Releases for both HESCOM and BWSSB (Nitish Nag).",
-                    "Implemented TCED Back Office Bill Generation & Complaint Management logic for DL withdrawal, wheeling units, transmission loss, and street light billing (Pallapu Rajesh).",
-                    "INESH prepaid meter daily charge deduction & DLMS relay verification in 3-day test/fix cycle (Kousalya Talari).",
+                    "Shipped Nov 2026 SpotBilling App Releases for HESCOM & BWSSB, TCED TOD (Normal/Peak/OffPeak) file updates, TCED WFM Portal integration, and E-Mudra LE/LR screen modifications (Nitish Nag).",
+                    "Completed 6-day TCED billing sprint across DL withdrawal, wheeling/transmission loss, street light, solar bill print, temporary consumer, New Consumer/Debit Entry, and Solar Wheeling Transmission Loss (Pallapu Rajesh).",
+                    "Progressed INESH & Capital meter DLMS prepaid billing through daily charge deduction, missed-day billing recovery, PR XML/API integration, TCP error analysis, and cumulative energy register consumption calculations (Kousalya Talari).",
                 ],
                 "risks": [
-                    "Kousalya is on Day 3 of INESH continuous billing cycle & duplicate daily charge deduction fix.",
-                    "Rohith's HESCOM Seva Sindhu integration paused on Oct 30 after exhausting Claude weekly quota.",
+                    "Kousalya is resolving pending DLMS meter reading & TCP response issues on Capital meter prepaid billing (Day 6 of prepaid track).",
+                    "Nitish Nag did not submit a Nov 4 standup report after planning further E-Mudra LE/LR screen modifications on Nov 3.",
                 ],
             },
         },
@@ -886,17 +1071,18 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
                 "DCW & Material Purchase OM",
             ],
             "brief": {
-                "title": "ERP & HRMS Product Brief",
+                "title": "ERP & HRMS Product Brief (Oct 29 – Nov 4)",
                 "agent_author": "ERP Architecture Agent",
-                "overview": "Spans GESCOM & TCED HRMS modules, Employee Creation/Approval workflows, Salary Arrears & DA/DP calculation engines, Kerala Municipal PF Form 3/4 workflows, and BGCL/DCW operations.",
+                "overview": "Spans GESCOM & TCED HRMS modules, Employee Creation/Approval & PensionStopExit workflows, Salary Arrears/JV/ELS/Fund Request calculation engines, Kerala Municipal PF Form 3/4 & 75% eligibility workflows, E-Sign, and BGCL/DCW operations.",
                 "highlights": [
-                    "GESCOM HRM Salary Arrears (USP_HRMSalaryArrears) updated with live grid recalculation & Aug-2024 31% DP rule + Salary Bill Approval 4-section UI redesign (Venkata Sai).",
-                    "EmployeeCreationApproval Aadhaar/PAN document loading wired to HRMS_AdditionalDocumnetsAppr on live server; ready for deployment (Mannuru Lasya).",
-                    "TCED Form 3 & Form 4 Temporary Advance PF screens, approval hierarchy, and reports built across Portal & ERP (Sanjana C S).",
+                    "GESCOM HRMS 5-screen delivery ready for deployment: Salary Arrears Report/JV (2023–2024), ELS Approval double-deduction Net Pay fix, and Salary Fund Request & Approval (B_BRNO, USP_HRMS_SalaryFundRequestApproval) + Salary JV in progress (Venkata Sai).",
+                    "Completed EmployeeCreation & EmployeeCreationApproval deduplication/live-path fixes and verified all Pension modules + added PensionStopExit Clear button ready for deployment (Mannuru Lasya).",
+                    "Built TCED Form 3 & Form 4 screens/reports across Portal & ERP, implemented 75% Total Subscription & Balance at Credit advance eligibility logic, and verified calculations end-to-end (Sanjana C S).",
+                    "Fixed HRMS Disciplinary Action dropdown hierarchy (LocationCode) & Annual Incumbency retirement-date/office-mapping (Anith HM) and completed TCED ERP E-Sign module changes (Rohith R).",
                 ],
                 "risks": [
-                    "Shared screens between ERP and Employee Portal diverge subtly—direct file copies break project-specific bindings (flagged by Venkata Sai).",
-                    "TCED Employee Exit module needs employee-name search in addition to Org/Office dropdowns (flagged by Ankith HM).",
+                    "Gulbarga name issue in RDLC Sanction Strength Report awaiting affected report sample for verification (Anith HM).",
+                    "Venkata Sai submitted his Nov 3 report on Nov 4 morning (10:09 AM) and has not yet sent a Nov 4 evening report.",
                 ],
             },
         },
@@ -909,37 +1095,36 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
                 "KPTCL Report & Application Fixes",
             ],
             "brief": {
-                "title": "KPTCL Maintenance Brief",
+                "title": "KPTCL Maintenance Brief (Oct 29 – Nov 4)",
                 "agent_author": "KPTCL Ops Agent",
                 "overview": "Tracks bug resolutions, report generation fixes, and application changes for Karnataka Power Transmission Corporation Limited (KPTCL).",
                 "highlights": [
-                    "Resolved KPTCL Report generation issues on Oct 30 and continued application issue fixes on Oct 31 (Chitrashree HR).",
+                    "Resolved KPTCL Report generation issues on Oct 30 and application issues on Oct 31 (Chitrashree HR).",
                 ],
                 "risks": [
-                    "Updates for KPTCL are currently one-liners ('Worked on KPTCL issues') without ticket IDs or root-cause documentation.",
+                    "Chitrashree missed standup reports on Nov 2 and Nov 4, and KPTCL updates lack specific screen/ticket IDs.",
                 ],
             },
         },
         {
             "id": "Infra & Security",
             "name": "Infra & Security",
-            "full_name": "Infra & Security — DB Restores, CtrlS DC/DR, WAF & Network",
+            "full_name": "Infra & Security — SQL Server & PostgreSQL / PPAS 9.5 DB Restorations",
             "color": "purple",
             "projects": [
-                "Database Restores (SQL Server & PostgreSQL)",
-                "CtrlS Datacenter & DR Migration",
+                "SQL Server Multi-Utility DB Restorations",
+                "PostgreSQL / PPAS 9.5 Live DB Restorations",
             ],
             "brief": {
-                "title": "Infra, DB Restore & CtrlS DC/DR Brief",
-                "agent_author": "Infra & SecOps Agent",
-                "overview": "Covers multi-utility SQL Server & PostgreSQL database restorations (BESCOMAMI, COCHINPORT, GESCOMAMI) and the CtrlS Tier-4 DC/DR migration (6 DC VMs, 5 DR VMs, NetScaler LB+WAF, non-overlapping Azure S2S subnets).",
+                "title": "Database Restoration & Recovery Brief (Oct 29 – Nov 4)",
+                "agent_author": "Infra & DB Reliability Agent",
+                "overview": "Covers multi-utility SQL Server (21-database backup set + GESCOM_LIVE_02042026 full & differential restores) and PostgreSQL / PPAS 9.5 (ERP_LIVE_31032026 & GESCOM_LIVE_02042026) database restorations, role/ownership handling, and row-count integrity checks.",
                 "highlights": [
-                    "Restored 8+ databases including BESCOMAMI, COCHINPORT, and GESCOMAMI with table count & integrity checks (Ankith HM).",
-                    "Finalized non-overlapping DC (10.100-150.1.0/24) and DR (10.160.10-15.0/24) IP addressing with CtrlS; LB & WAF deployed (Prasad Amara & Sumukh Hegde).",
+                    "Confirmed 20 of 21 main SQL Server databases restored and ONLINE (including BESCOMAMI, COCHINPORT, GESCOMAMI, VIZAG_15092023, INDIAN_RAILWAY_07062023, NSOFTSTORE_29042026, SRTPV_BESCOM) + completed SQL Server full restore for GESCOM_LIVE_02042026 (Ankith HM).",
+                    "Completed ERP_LIVE_31032026 restoration in PostgreSQL/PPAS 9.5 using --no-owner and --no-acl flags and initiated GESCOM_LIVE_02042026 PostgreSQL validation (Ankith HM).",
                 ],
                 "risks": [
-                    "Sumukh intervention (Oct 31 11:16 PM): Ankith must submit a complete database restore report and explicitly handle GESCOM on PostgreSQL.",
-                    "Pending application URL list for CtrlS WAF/LB binding and S2S VPN encryption parameters.",
+                    "SQL Server differential restore for GESCOM_LIVE_02042026 experienced delays and was restarted on Nov 4; final verification & PostgreSQL GESCOM validation scheduled for Nov 5.",
                 ],
             },
         },
@@ -950,29 +1135,31 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
         {
             "id": "trm-inesh-prepaid",
             "product": "TRM",
-            "project": "Smart Metering (INESH / CMRL / EMudra)",
-            "title": "INESH Meter Prepaid Billing, Daily Charge Deduction & DLMS Relay Verification",
+            "project": "Smart Metering (INESH / Capital / CMRL / EMudra)",
+            "title": "INESH & Capital Meter DLMS Prepaid Billing, PR XML/API & Daily Consumption Calculation",
             "assignee": "Kousalya Talari",
             "assignee_email": "talari.kousalya@nsoft.in",
             "status": "in_progress",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["INESH Meter", "DLMS Attributes", "Load Switch", "Prepaid"],
+            "end_day": "2026-11-04",
+            "days_active": 6,
+            "source_day": "2026-11-04",
+            "tags": ["INESH Meter", "Capital Meter", "DLMS", "PR XML / API", "Prepaid"],
             "subtasks": [
-                {"text": "Test prepaid billing implementation & balance updates in INESH meter", "done": True},
-                {"text": "Verify relay status for disconnection/reconnection via DLMS attributes", "done": True},
-                {"text": "Fix relay status update issues & prevent duplicate daily charge deduction", "done": False},
+                {"text": "Oct 29–31: INESH prepaid billing, daily charge deduction & DLMS relay verification", "done": True},
+                {"text": "Nov 2: Test missed-day billing recovery & post-billing PR XML generation / API integration", "done": True},
+                {"text": "Nov 3: Diagnose INESH & Capital meter DLMS communication & TCP response errors", "done": True},
+                {"text": "Nov 4: Capital meter cumulative energy register readings & daily consumption calculation", "done": True},
+                {"text": "Nov 5 Plan: Complete Capital meter prepaid billing & resolve pending meter reading issues", "done": False},
             ],
-            "ai_agent_note": "3-day carryover workstream. Kousalya isolated the root cause to DLMS relay status updates and duplicate daily charge deduction—scheduled to close on Nov 2.",
+            "ai_agent_note": "6-day deep smart-metering track: Kousalya progressed from INESH relay/deduction testing to PR XML API integration and Capital meter DLMS cumulative energy register calculations.",
         },
         {
             "id": "trm-cmrl-comms",
             "product": "TRM",
-            "project": "Smart Metering (INESH / CMRL / EMudra)",
-            "title": "CMRL Meter Communication Issue Resolution & Capital Meter Testing",
+            "project": "Smart Metering (INESH / Capital / CMRL / EMudra)",
+            "title": "CMRL Meter Communication Issue Resolution & Initial Capital Meter Testing",
             "assignee": "Kousalya Talari",
             "assignee_email": "talari.kousalya@nsoft.in",
             "status": "done",
@@ -984,7 +1171,7 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "tags": ["CMRL", "Capital Meter"],
             "subtasks": [
                 {"text": "Resolve CMRL meter communication issues", "done": True},
-                {"text": "Execute Capital meter testing", "done": True},
+                {"text": "Execute initial Capital meter testing", "done": True},
             ],
             "ai_agent_note": None,
         },
@@ -992,20 +1179,20 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "id": "trm-spotbilling-releases",
             "product": "TRM",
             "project": "HESCOM SpotBilling & Integrations",
-            "title": "Nov 2026 SpotBilling App Releases (HESCOM & BWSSB) + Weavers LT-5 R DBT Tariff",
+            "title": "Nov 2026 SpotBilling App Releases (HESCOM & BWSSB) + Weavers LT-5 R DBT & Rural Rebate",
             "assignee": "Nitish Nag M",
             "assignee_email": "nitishnag.m@nsoft.in",
             "status": "done",
             "priority": "high",
             "start_day": "2026-10-30",
-            "end_day": "2026-10-31",
-            "days_active": 2,
-            "source_day": "2026-10-31",
-            "tags": ["HESCOM", "BWSSB", "LT-5 R DBT Tariff", "App Release"],
+            "end_day": "2026-11-02",
+            "days_active": 3,
+            "source_day": "2026-11-02",
+            "tags": ["HESCOM", "BWSSB", "LT-5 R DBT Tariff", "Rural Rebate"],
             "subtasks": [
                 {"text": "Modify Weavers rebate concept for LT-5 R DBT Tariff based on Sanctioned HP", "done": True},
-                {"text": "Release Nov 2026 SpotBilling App for HESCOM", "done": True},
-                {"text": "Release Nov 2026 SpotBilling App for BWSSB", "done": True},
+                {"text": "Release Nov 2026 SpotBilling Apps for HESCOM and BWSSB", "done": True},
+                {"text": "Nov 2: Review and resolve Rural Rebate issues in TRM", "done": True},
             ],
             "ai_agent_note": None,
         },
@@ -1032,45 +1219,47 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
         {
             "id": "trm-smart-emudra",
             "product": "TRM",
-            "project": "Smart Metering (INESH / CMRL / EMudra)",
-            "title": "Smart Meter API Deployments, EMudra LE/LR Integration & Virtual/Burnt Meter Logic",
+            "project": "Smart Metering (INESH / Capital / CMRL / EMudra)",
+            "title": "E-Mudra LE/LR Screen Modifications, Smart Meter Billing Data Fetch & TCED TOD/WFM",
             "assignee": "Nitish Nag M",
             "assignee_email": "nitishnag.m@nsoft.in",
-            "status": "planned",
+            "status": "in_progress",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["EMudra", "Smart Metering API", "Virtual Meter"],
+            "end_day": "2026-11-03",
+            "days_active": 5,
+            "source_day": "2026-11-03",
+            "tags": ["E-Mudra LE/LR", "Smart Meter Data Fetch", "TCED TOD", "WFM Portal"],
             "subtasks": [
-                {"text": "Modify Virtual Meter & Meter Burnt / Not Running Smart-to-Smart cases", "done": True},
-                {"text": "EMudra meeting on LE/LR cases integration", "done": True},
-                {"text": "Deploy Smart Meter APIs, EMudra & Billing Data Fetch", "done": False},
+                {"text": "Oct 29–31: Virtual Meter, Meter Burnt/Not Running Smart-to-Smart & EMudra LE/LR meeting", "done": True},
+                {"text": "Nov 2: E-Mudra LE/LR screen modifications & TCED TOD (Normal/Peak/OffPeak) file updation", "done": True},
+                {"text": "Nov 3: Smart Meter Billing Data Fetch fixes & TCED WFM Portal integration", "done": True},
+                {"text": "Complete remaining E-Mudra LE/LR screen modifications (No Nov 4 report received)", "done": False},
             ],
-            "ai_agent_note": None,
+            "ai_agent_note": "Nitish delivered TCED TOD tariff updates, WFM Portal integration, and Smart Meter Billing Data Fetch on Nov 2–3, but did not send a Nov 4 standup report.",
         },
         {
             "id": "trm-tced-billing-screens",
             "product": "TRM",
             "project": "TCED Billing & Demand",
-            "title": "TCED Back Office Bill Generation & Complaint Mgmt (DL, Wheeling, Loss & Street Light)",
+            "title": "TCED Back Office Bill Gen, Complaint Mgmt, Solar Print, Temporary Consumer & Solar Wheeling Loss",
             "assignee": "Pallapu Rajesh",
             "assignee_email": "pallapu.rajesh@nsoft.in",
             "status": "in_progress",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["TCED", "Back Office Billing", "Complaint Mgmt", "Wheeling/Loss"],
+            "end_day": "2026-11-04",
+            "days_active": 6,
+            "source_day": "2026-11-04",
+            "tags": ["TCED", "Back Office Billing", "Solar Wheeling Loss", "Temporary Consumer"],
             "subtasks": [
-                {"text": "Day 1: Incorporate DL withdrawal logic & divisional-to-subdivision billing + Demand Report", "done": True},
-                {"text": "Day 2: Implement wheeling units & transmission loss billing logic + Demand/Mini Demand Report", "done": True},
-                {"text": "Day 3: Implement street light consumer billing logic across both screens", "done": True},
-                {"text": "Day 4 Plan: Complete remaining Back Office Bill Generation & Complaint Mgmt modifications", "done": False},
+                {"text": "Oct 29–31: DL withdrawal, wheeling/transmission loss & street light billing logic", "done": True},
+                {"text": "Nov 2: Implement Solar Bill Print functionality modifications", "done": True},
+                {"text": "Nov 3: Implement temporary consumer billing logic in Bill Gen & Complaint Mgmt", "done": True},
+                {"text": "Nov 4: Implement New Consumer Entry, Debit Entry & Billing Report modifications", "done": True},
+                {"text": "Nov 5 Plan: Complete Solar Wheeling Transmission Loss & wheeling charges logic", "done": False},
             ],
-            "ai_agent_note": "Rajesh has modified the same two TCED screens (Back Office Bill Generation & Complaint Mgmt) for 3 consecutive days across 3 different tariff rules.",
+            "ai_agent_note": "6-day continuous delivery on TCED billing engines: Rajesh completed 6 distinct consumer/tariff rules and is now finalizing Solar Wheeling Transmission Loss.",
         },
         {
             "id": "trm-tced-capacitor",
@@ -1096,21 +1285,22 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "id": "trm-hescom-seva-sindhu",
             "product": "TRM",
             "project": "HESCOM SpotBilling & Integrations",
-            "title": "HESCOM Seva Sindhu Portal Integration",
+            "title": "HESCOM Seva Sindhu & E-Mudhra Integration + TCED Online Services (LT New Connection) Fix",
             "assignee": "Rohith R",
             "assignee_email": "rohith.r@nsoft.in",
-            "status": "blocked",
+            "status": "done",
             "priority": "high",
             "start_day": "2026-10-30",
-            "end_day": "2026-11-01",
-            "days_active": 2,
-            "source_day": "2026-10-30",
-            "tags": ["HESCOM", "Seva Sindhu", "Claude Quota Blocker"],
+            "end_day": "2026-11-04",
+            "days_active": 3,
+            "source_day": "2026-11-03",
+            "tags": ["HESCOM", "E-Mudhra", "Seva Sindhu", "TCED Online Services"],
             "subtasks": [
-                {"text": "Start HESCOM Seva Sindhu integration", "done": True},
-                {"text": "Complete HESCOM Seva Sindhu integration (No Oct 31 report received)", "done": False},
+                {"text": "Oct 30: Start HESCOM Seva Sindhu integration", "done": True},
+                {"text": "Nov 3: Complete E-Mudhra Integration for HESCOM & resolve TCED Online Services data load issue", "done": True},
+                {"text": "Nov 4: Resolve minor data load issue in TCED Online Services (LT New Connection)", "done": True},
             ],
-            "ai_agent_note": "Blocker Alert: Rohith reported on Oct 30 that his Claude weekly limit was exhausted and did not submit an Oct 31 update.",
+            "ai_agent_note": "Resolved after Oct 30–Nov 2 pause: Rohith completed HESCOM E-Mudhra integration on Nov 3 and fixed TCED Online Services LT New Connection data load on Nov 4.",
         },
 
         # ==================== PRODUCT 2: ERP ====================
@@ -1118,86 +1308,109 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "id": "erp-gescom-arrears",
             "product": "ERP",
             "project": "GESCOM ERP & Employee Portal (HRMS)",
-            "title": "GESCOM HRM Salary Arrears (USP_HRMSalaryArrears, DA Capture & 31% DP Rule) + Bill Approval UI",
+            "title": "GESCOM HRMS Arrears/JV (2023–24), ELS Approval Net Pay Fix, Salary Fund Request (B_BRNO) & Salary JV",
             "assignee": "Venkata Sai",
             "assignee_email": "venkata.sai@nsoft.in",
             "status": "in_progress",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-10-31",
-            "days_active": 2,
-            "source_day": "2026-10-30",
-            "tags": ["GESCOM ERP", "Employee Portal", "USP_HRMSalaryArrears", "DAEffectiveDateCapture"],
+            "end_day": "2026-11-04",
+            "days_active": 4,
+            "source_day": "2026-11-03",
+            "tags": ["USP_HRMS_SalaryFundRequestApproval", "B_BRNO", "M_ApprovalManagement", "HRMELSApproval"],
             "subtasks": [
-                {"text": "Editable Existing/Revised Basic in Arrears grid with instant CPS/DA/DP/Net recalculation", "done": True},
-                {"text": "Apply DP 0% (thru Jul-2024) & 31% (Aug-2024+) rule across ERP & Employee Portal", "done": True},
-                {"text": "Redesign Employee Salary Bill Approval screen into 4 clear sections with search", "done": True},
-                {"text": "End-to-end testing of USP_HRMSalaryArrears & Salary Fund Request Budget screen", "done": False},
+                {"text": "Oct 29–30: Salary Arrears grid (USP_HRMSalaryArrears, 31% DP rule) & Salary Bill Approval UI", "done": True},
+                {"text": "Nov 3: Add 2023–2024 to Arrears Report/JV & fix ELS Approval double-deduction Net Pay bug", "done": True},
+                {"text": "Nov 3: Build Salary Fund Request (B_BRNO) & Approval Budget grid (USP_HRMS_SalaryFundRequestApproval)", "done": True},
+                {"text": "Nov 3: Diagnose AAO login approval visibility via M_ApprovalManagement (RoleOrderId & office)", "done": True},
+                {"text": "Nov 4 WIP: Verify Salary JV creation/approval flow in HRMS & deploy 5 ERP screens + SQL proc", "done": False},
             ],
-            "ai_agent_note": "High-depth delivery on Oct 30, but Venkata Sai deferred the Salary Fund Request Budget screen from Oct 29 and missed his Oct 31 report.",
+            "ai_agent_note": "Comprehensive Nov 3 delivery (submitted Nov 4 at 10:09 AM) covering 5 ERP screens and USP_HRMS_SalaryFundRequestApproval.sql with 6 architectural learnings.",
         },
         {
             "id": "erp-emp-approval-docs",
             "product": "ERP",
             "project": "TCED ERP & Employee Portal (HRMS & PF)",
-            "title": "EmployeeCreationApproval Screen — Return-to-Edit Flow & Live Server Aadhaar/PAN Display",
+            "title": "EmployeeCreation & Approval (Aadhaar/PAN, Dedup & Save Fix) + PensionStopExit Screen",
             "assignee": "Mannuru Lasya",
             "assignee_email": "lasya.mannuru@nsoft.in",
             "status": "done",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-01",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["HRMS", "HRMS_AdditionalDocumnetsAppr", "Aadhaar/PAN", "Deployment"],
+            "end_day": "2026-11-04",
+            "days_active": 5,
+            "source_day": "2026-11-04",
+            "tags": ["HRMS", "HRMS_AdditionalDocumnetsAppr", "PensionStopExit", "EmployeeCreation"],
             "subtasks": [
-                {"text": "Verify auto-population of employee fields & wire Return button to Edit mode", "done": True},
-                {"text": "Switch backend to read file paths from HRMS_AdditionalDocumnetsAppr on live server", "done": True},
-                {"text": "Deploy updated Employee modules to production", "done": False},
+                {"text": "Oct 29–31: Wire Return-to-Edit & live-server Aadhaar/PAN paths from HRMS_AdditionalDocumnetsAppr", "done": True},
+                {"text": "Nov 2: Eliminate duplicate rows in EmployeeCreationApproval & verify EmployeeCreation save flow", "done": True},
+                {"text": "Nov 4: Verify data persistence across all Pension modules & add Clear button to PensionStopExit", "done": True},
+                {"text": "Nov 5 Plan: Deploy PensionStopExit screen to production", "done": False},
             ],
-            "ai_agent_note": "Model execution: 100% plan-to-actual alignment across all 3 days; ready for module deployment.",
+            "ai_agent_note": "Consistent high-clarity execution: finished EmployeeCreation/Approval stabilization on Nov 2 and completed PensionStopExit enhancements on Nov 4.",
         },
         {
             "id": "erp-tced-form3-form4",
             "product": "ERP",
             "project": "TCED ERP & Employee Portal (HRMS & PF)",
-            "title": "TCED Kerala Municipal PF — Form 3 & Form 4 Temporary Advance Screens, Hierarchy & Reports",
+            "title": "TCED Kerala Municipal PF (Form 3 & 4, 75% Advance Eligibility & Balance at Credit) + DA Pension Arrears",
             "assignee": "Sanjana C S",
             "assignee_email": "sanjana.cs@nsoft.in",
             "status": "in_progress",
-            "priority": "medium",
+            "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["TCED", "Form 3 & Form 4", "Employee Portal", "ERP Reports"],
+            "end_day": "2026-11-04",
+            "days_active": 6,
+            "source_day": "2026-11-04",
+            "tags": ["TCED", "Form 3 & Form 4", "75% Subscription Rule", "DA Pension Arrears"],
             "subtasks": [
-                {"text": "Create Form 3 screen in Employee Portal & approval screen in ERP", "done": True},
-                {"text": "Create Form 4 Sanction screen & approval hierarchy in ERP source", "done": True},
-                {"text": "Build Form 3 & Form 4 reports (Create/Approve/Recommend) in Employee Portal", "done": True},
-                {"text": "Build Form 3 & Form 4 reports (Create/Approve/Recommend) in ERP source", "done": False},
+                {"text": "Oct 29–31: Build Form 3 & Form 4 screens, approval hierarchy & Portal reports", "done": True},
+                {"text": "Nov 2: Create Form 3 & Form 4 ERP reports for Create, Approve, Reject & Recommend sections", "done": True},
+                {"text": "Nov 3: Implement 75% Total Subscription advance limit, Balance at Credit & salary deduction logic", "done": True},
+                {"text": "Nov 4: Complete end-to-end calculation testing & edge-case verification for PF advances", "done": True},
+                {"text": "Nov 5 Plan: Create new DA Pension Arrears screen and report in ERP source", "done": False},
             ],
-            "ai_agent_note": None,
+            "ai_agent_note": "100% 6-day attendance and plan-to-actual alignment: closed the TCED Municipal PF Temporary Advance track on Nov 4 and starting DA Pension Arrears next.",
         },
         {
             "id": "erp-hrms-bugfixes",
             "product": "ERP",
             "project": "TCED ERP & Employee Portal (HRMS & PF)",
-            "title": "HRMS Deputation Checkbox, Double Language Bug & Flag-Based CRUD Stored Procedures",
+            "title": "HRMS Deputation Checkbox, Disciplinary Action (LocationCode) & Annual Incumbency / RDLC Reports",
             "assignee": "Anith HM",
             "assignee_email": "anith.hm@nsoft.in",
             "status": "in_progress",
-            "priority": "medium",
+            "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["HRMS", "ASP.NET/C#", "SQL Stored Proc"],
+            "end_day": "2026-11-04",
+            "days_active": 6,
+            "source_day": "2026-11-04",
+            "tags": ["HRMS", "Disciplinary Action", "Annual Incumbency", "LocationCode", "RDLC"],
             "subtasks": [
-                {"text": "Build SQL relational tables & flag-based CRUD stored procedure with C# bindings", "done": True},
-                {"text": "Fix deputation checkbox bug & double language display issue across frontend/backend", "done": True},
-                {"text": "Remove current designation join date & verify new/edit employee paths", "done": True},
-                {"text": "Add input validation limits & test responsive layout across screen sizes", "done": False},
+                {"text": "Oct 29–Nov 2: Fix deputation checkbox, double language bug & designation join date across layers", "done": True},
+                {"text": "Nov 3: Fix Disciplinary Action Division/Section Employee dropdown via LocationCode stored proc", "done": True},
+                {"text": "Nov 4: Resolve Annual Incumbency Preparation retirement-date & office-mapping filter issues", "done": True},
+                {"text": "Nov 4–5: Investigate & verify Gulbarga name issue in RDLC Sanction Strength Report", "done": False},
+            ],
+            "ai_agent_note": "Strong 6-day technical ramp-up: 6/6 green learning reflections covering AutoPostBack, BAL/DAL, LocationCode SQL hierarchy, Session variables, and RDLC reports.",
+        },
+        {
+            "id": "erp-tced-esign",
+            "product": "ERP",
+            "project": "TCED ERP & Employee Portal (HRMS & PF)",
+            "title": "TCED ERP E-Sign Module Changes & Pending HRMS Tasks",
+            "assignee": "Rohith R",
+            "assignee_email": "rohith.r@nsoft.in",
+            "status": "in_progress",
+            "priority": "medium",
+            "start_day": "2026-11-04",
+            "end_day": "2026-11-04",
+            "days_active": 1,
+            "source_day": "2026-11-04",
+            "tags": ["TCED ERP", "E-Sign Module", "HRMS"],
+            "subtasks": [
+                {"text": "Nov 4: Complete E-Sign Module changes in TCED ERP", "done": True},
+                {"text": "Nov 5 Plan: Complete pending HRMS tasks in TCED ERP", "done": False},
             ],
             "ai_agent_note": None,
         },
@@ -1208,10 +1421,10 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "title": "TCED ERP 19 Additional HR Fields Review & Employee Exit Dropdown / Search Investigation",
             "assignee": "Ankith HM",
             "assignee_email": "ankith.hm@nsoft.in",
-            "status": "in_progress",
+            "status": "done",
             "priority": "medium",
             "start_day": "2026-10-31",
-            "end_day": "2026-11-01",
+            "end_day": "2026-10-31",
             "days_active": 1,
             "source_day": "2026-10-31",
             "tags": ["TCED ERP", "Employee Exit", "C# / ASPX"],
@@ -1225,23 +1438,24 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "id": "erp-bgcl-dcw",
             "product": "ERP",
             "project": "BGCL ERP & Requisitions",
-            "title": "BGCL Salary/Leave Fixes, Work Requisitions, Imprest Indent & Material Purchase OM",
+            "title": "BGCL CPNG Registration, BPNO/DPNG Reports, Salary/Leave Fixes & DCW / Material Purchase OM",
             "assignee": "Chitrashree HR",
             "assignee_email": "chitrashree.hr@nsoft.in",
             "status": "in_progress",
             "priority": "medium",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["BGCL", "DCW Reports", "Material Purchase OM"],
+            "end_day": "2026-11-03",
+            "days_active": 4,
+            "source_day": "2026-11-03",
+            "tags": ["BGCL", "CPNG Registration", "BPNO / DPNG", "DCW Reports"],
             "subtasks": [
-                {"text": "Imprest Indent Report, Print option, Material Issue & Estimate Approval changes (Chitrashree)", "done": True},
-                {"text": "DCW Reports & Material Purchase OM changes + BGCL work requisition (Chitrashree)", "done": True},
-                {"text": "Fix BGCL leave balance issue & salary generation issues (Pallapu Rajesh)", "done": True},
-                {"text": "Continue BGCL module modifications", "done": False},
+                {"text": "Oct 29–31: Imprest Indent, Material Purchase OM, DCW Reports & BGCL work requisitions (Chitrashree)", "done": True},
+                {"text": "Oct 30–31: Fix BGCL leave balance & salary generation issues (Pallapu Rajesh)", "done": True},
+                {"text": "Nov 3: BGCL CPNG Registration Process workflow & validations (Chitrashree)", "done": True},
+                {"text": "Nov 3: Fix BGCL BPNO generation & DPNG reports issues (Pallapu Rajesh)", "done": True},
+                {"text": "Continue BGCL module modifications (Chitrashree missed Nov 4 report)", "done": False},
             ],
-            "ai_agent_note": "Both Chitrashree HR and Pallapu Rajesh are touching BGCL concurrently—coordinate work requisition vs. salary/leave changes.",
+            "ai_agent_note": "Both Chitrashree HR (CPNG Registration) and Pallapu Rajesh (BPNO & DPNG reports) delivered BGCL fixes on Nov 3.",
         },
 
         # ==================== PRODUCT 3: KPTCL ====================
@@ -1252,10 +1466,10 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
             "title": "KPTCL Report Issues & Application Bug Fixes",
             "assignee": "Chitrashree HR",
             "assignee_email": "chitrashree.hr@nsoft.in",
-            "status": "in_progress",
+            "status": "done",
             "priority": "medium",
             "start_day": "2026-10-30",
-            "end_day": "2026-11-01",
+            "end_day": "2026-10-31",
             "days_active": 2,
             "source_day": "2026-10-31",
             "tags": ["KPTCL", "Reports"],
@@ -1270,50 +1484,52 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
         {
             "id": "infra-db-restores",
             "product": "Infra & Security",
-            "project": "Database Restores (SQL Server & PostgreSQL)",
-            "title": "Multi-Utility DB Restores & Integrity Checks (BESCOMAMI, COCHINPORT, GESCOMAMI + GESCOM Postgres)",
+            "project": "SQL Server Multi-Utility DB Restorations",
+            "title": "SQL Server 21-Database Fleet Restoration & GESCOM_LIVE_02042026 Full + Differential Recovery",
             "assignee": "Ankith HM",
             "assignee_email": "ankith.hm@nsoft.in",
-            "status": "blocked",
-            "priority": "high",
-            "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["BESCOMAMI", "COCHINPORT", "GESCOMAMI", "PostgreSQL", "SQL Server"],
-            "subtasks": [
-                {"text": "Oct 29–30: Review backup files & restore 5 SQL Server databases + verify table counts", "done": True},
-                {"text": "Oct 31: Restore BESCOMAMI, COCHINPORT & GESCOMAMI and complete integrity checks", "done": True},
-                {"text": "Sumukh Directive: Publish complete DB restore report & complete GESCOM PostgreSQL restore", "done": False},
-            ],
-            "ai_agent_note": "Sumukh Hegde flagged on Oct 31 (11:16 PM): 'Put up a report of complete database restore. You should take care of GESCOM which is PostgreSQL also.'",
-        },
-        {
-            "id": "infra-ctrls-dcdr",
-            "product": "Infra & Security",
-            "project": "CtrlS Datacenter & DR Migration",
-            "title": "CtrlS Tier-4 DC/DR Provisioning, Non-Overlapping Subnets, NetScaler LB/WAF & S2S VPN",
-            "assignee": "Prasad Amara & Sumukh Hegde",
-            "assignee_email": "prasad.amara@nsoft.in",
             "status": "in_progress",
             "priority": "high",
             "start_day": "2026-10-29",
-            "end_day": "2026-11-02",
-            "days_active": 3,
-            "source_day": "2026-10-31",
-            "tags": ["CtrlS DC/DR", "NetScaler WAF/LB", "SQL/Postgres VMs", "Azure S2S"],
+            "end_day": "2026-11-04",
+            "days_active": 6,
+            "source_day": "2026-11-04",
+            "tags": ["SQL Server", "GESCOM_LIVE_02042026", "BESCOMAMI", "VIZAG_15092023", "SRTPV_BESCOM"],
             "subtasks": [
-                {"text": "Re-assign DC private subnets (10.100–150.1.0/24) to avoid Azure S2S VPN IP overlap", "done": True},
-                {"text": "Provision 6 DC VMs (sqlvm 384GB, pgvm 128GB, appserver, multi-prod, bgcl, dev-vm) & NAT Public IPs", "done": True},
-                {"text": "Deploy NetScaler LB + WAF & confirm DR subnet addressing (10.160.10–15.0/24)", "done": True},
-                {"text": "Share deployed application URL list with CtrlS for WAF/LB binding", "done": False},
+                {"text": "Oct 29–31: Restore 8 SQL Server DBs including BESCOMAMI, COCHINPORT & GESCOMAMI", "done": True},
+                {"text": "Nov 2: Restore VIZAG_15092023, INDIAN_RAILWAY_07062023, NSOFTSTORE_29042026 & SRTPV_BESCOM (18/21 online)", "done": True},
+                {"text": "Nov 3: Confirm 20 SQL Server databases restored and ONLINE", "done": True},
+                {"text": "Nov 4: Complete SQL Server full restore for GESCOM_LIVE_02042026 & restart differential restore", "done": True},
+                {"text": "Nov 5 Plan: Complete and verify SQL Server GESCOM differential restore", "done": False},
             ],
-            "ai_agent_note": "CtrlS deployed LB & WAF on Oct 30; Prasad shared full DR IP table on Oct 31. Next step: share application URLs once app deployments finish.",
+            "ai_agent_note": "Following Sumukh's Oct 31 directive, Ankith published a structured DB restore table on Nov 2, brought 20 SQL Server DBs online on Nov 3, and completed the GESCOM_LIVE_02042026 full restore on Nov 4.",
+        },
+        {
+            "id": "infra-postgres-restores",
+            "product": "Infra & Security",
+            "project": "PostgreSQL / PPAS 9.5 Live DB Restorations",
+            "title": "PostgreSQL / PPAS 9.5 Restoration & Validation (ERP_LIVE_31032026 & GESCOM_LIVE_02042026)",
+            "assignee": "Ankith HM",
+            "assignee_email": "ankith.hm@nsoft.in",
+            "status": "in_progress",
+            "priority": "high",
+            "start_day": "2026-11-02",
+            "end_day": "2026-11-04",
+            "days_active": 3,
+            "source_day": "2026-11-03",
+            "tags": ["PostgreSQL", "PPAS 9.5", "ERP_LIVE_31032026", "GESCOM_LIVE_02042026", "--no-owner"],
+            "subtasks": [
+                {"text": "Nov 3: Complete ERP_LIVE_31032026 restore in PPAS 9.5 (--no-owner / --no-acl) & verify tables/views/sequences", "done": True},
+                {"text": "Nov 3: Initiate GESCOM_LIVE_02042026 PostgreSQL restoration and monitor data import", "done": True},
+                {"text": "Nov 4: Check table details and row-count estimates to validate PostgreSQL restoration", "done": True},
+                {"text": "Nov 5 Plan: Complete PostgreSQL GESCOM restoration and final data validation", "done": False},
+            ],
+            "ai_agent_note": "Directly addresses Sumukh Hegde's Oct 31 reminder ('take care of GESCOM which is PostgreSQL also').",
         },
     ]
 
-    # Attach the actual matrix cell object (`source_cell`) to each task so hovering/clicking
-    # a task in the ClickUp view pops up the exact raw standup email!
+    # Attach the actual matrix cell object (`source_cell`) to each task so clicking
+    # a task in the ClickUp view can open the full source email drawer if needed
     for t in tasks:
         em = t["assignee_email"]
         sday = t["source_day"]
@@ -1322,5 +1538,5 @@ def _build_product_tracker(matrix: Dict[str, Dict[str, Any]], sorted_days: List[
     return {
         "products": products,
         "tasks": tasks,
-        "timeline_days": ["2026-10-29", "2026-10-30", "2026-10-31", "2026-11-01", "2026-11-02"],
+        "timeline_days": ["2026-10-29", "2026-10-30", "2026-10-31", "2026-11-02", "2026-11-03", "2026-11-04"],
     }
