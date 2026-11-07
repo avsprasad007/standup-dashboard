@@ -318,20 +318,19 @@ export default function App() {
     summary = {},
   } = data || {};
 
-  // Resolve `/<developer-name>` or `/<alias>` route
+  // Resolve `/<developer-name>` or `/<alias>` route without calling a hook after early returns
   const rawSlug = currentRoute.replace(/^\/+|\/+$/g, '').toLowerCase();
-  const activeDeveloperPage = React.useMemo(() => {
-    if (!rawSlug || rawSlug === 'project-tracker') return null;
-    if (developer_pages[rawSlug]) return developer_pages[rawSlug];
-    return (
-      Object.values(developer_pages).find(
-        (dp) =>
-          dp.slug === rawSlug ||
-          (dp.aliases || []).map((a) => a.toLowerCase()).includes(rawSlug) ||
-          dp.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === rawSlug
-      ) || null
-    );
-  }, [rawSlug, developer_pages]);
+  const activeDeveloperPage =
+    !rawSlug || rawSlug === 'project-tracker'
+      ? null
+      : developer_pages[rawSlug] ||
+        Object.values(developer_pages).find(
+          (dp) =>
+            dp.slug === rawSlug ||
+            (dp.aliases || []).map((a) => a.toLowerCase()).includes(rawSlug) ||
+            (dp.person?.name || dp.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-') === rawSlug
+        ) ||
+        null;
 
   const isDeveloperAnchorPage = Boolean(activeDeveloperPage);
   const isHubHomePage = !isProjectTrackerPage && !isDeveloperAnchorPage;
@@ -369,7 +368,7 @@ export default function App() {
               <div className="flex flex-wrap items-center gap-2.5">
                 <h1 className="text-base font-bold tracking-tight">
                   {isDeveloperAnchorPage
-                    ? `${activeDeveloperPage.name} · Developer Anchor`
+                    ? `${activeDeveloperPage.person?.name || activeDeveloperPage.name} · Developer Anchor`
                     : isProjectTrackerPage
                     ? 'NSoft Product & Task Tracker'
                     : 'NSoft AI-Native Standup Intelligence Hub'}
@@ -637,13 +636,13 @@ export default function App() {
         {isDeveloperAnchorPage ? (
           <DeveloperAnchorView
             isDark={isDark}
-            developer={activeDeveloperPage}
-            allDevelopers={people}
+            developerPage={activeDeveloperPage}
+            allPeople={people}
             days={days}
-            matrix={matrix}
             onNavigateDeveloper={(slug) => navigateTo(`/${slug}`)}
-            onNavigateHome={() => navigateTo('/')}
             onInspectCell={(cell) => setPinnedCell(cell)}
+            onCopyText={handleCopyText}
+            copiedId={copiedId}
           />
         ) : isProjectTrackerPage ? (
           <ProductTrackerView
