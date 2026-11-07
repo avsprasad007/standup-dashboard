@@ -173,9 +173,19 @@ if (FRONTEND_DIST_DIR / "assets").exists():
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
+@app.get("/standup-dashboard.json")
+def serve_static_snapshot():
+    if (FRONTEND_DIST_DIR / "standup-dashboard.json").exists():
+        return FileResponse(str(FRONTEND_DIST_DIR / "standup-dashboard.json"))
+    if (FRONTEND_PUBLIC_DIR / "standup-dashboard.json").exists():
+        return FileResponse(str(FRONTEND_PUBLIC_DIR / "standup-dashboard.json"))
+    return parse_standup_dashboard()
+
+
 @app.get("/")
 @app.get("/project-tracker")
-def serve_index():
+@app.get("/{developer_slug}")
+def serve_index(developer_slug: str = ""):
     if (FRONTEND_DIST_DIR / "index.html").exists():
         return FileResponse(str(FRONTEND_DIST_DIR / "index.html"))
     return FileResponse(str(STATIC_DIR / "index.html"))
