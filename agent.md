@@ -4,7 +4,134 @@ This document is the authoritative blueprint for AI coding agents and developers
 
 ---
 
-## 1. Repository Architecture & Data Pipeline
+## 1. System Architecture & Component Diagram
+
+### System Architecture Diagram
+```mermaid
+flowchart TD
+    subgraph External["External Services & Upstream"]
+        Gmail["Google Workspace / Gmail API<br/>(OAuth 2.0 Read-Only)"]
+        Managers["Manager Standup Threads<br/>(sumukh.hegde@nsoft.in replies)"]
+        Engineers["Engineer Daily Standups<br/>(10 Team Members)"]
+        Engineers --> Gmail
+        Managers --> Gmail
+    end
+
+    subgraph Ingestion["Ingestion Pipeline (gmail_service.py)"]
+        OAuthFlow["OAuth2 Handshake<br/>(credentials.json, token.json)"]
+        FetchMIME["Message Fetcher & MIME Decoder<br/>(RFC-822, text/plain, html2text)"]
+        Deduplicator["Idempotent Deduplicator<br/>(Matches &lt;!-- gmail-id: ... --&gt;)"]
+        Gmail --> OAuthFlow --> FetchMIME --> Deduplicator
+    end
+
+    subgraph DataStore["Canonical Data Stores & Snapshots"]
+        RawEmails["raw-emails.md<br/>(Canonical Git-Tracked Markdown)"]
+        StaticSnapshot["standup-dashboard.json<br/>(Offline Static Snapshot Fallback)"]
+        BrowserStorage["Browser LocalStorage<br/>(Theme, Interactive 1:1 Outcome Edits,<br/>Sync Notes & Learning Goals)"]
+        Deduplicator --> RawEmails
+    end
+
+    subgraph AnalyticsEngine["Intelligence & Analytics Engine (standup_analyzer.py)"]
+        Parser["Standup & Thread Parser<br/>(RFC-822 Wrap Fix, Date/Person Index)"]
+        LearningScorer["Learning Quality Scorer<br/>(🟢 Specific · 🟡 Boilerplate · 🔴 Blocked)"]
+        CoachingEngine["Coaching Nudge Generator<br/>(Tailored Manager Feedback)"]
+        PvAEngine["Plan-vs-Actual Tracker<br/>(Aligned, Carryover, Pivoted, Missing)"]
+        ProductMapper["ClickUp Portfolio Mapper<br/>(TRM · ERP · KPTCL · Infra & Security)"]
+        AnchorBuilder["Developer 1:1 Anchor Synthesizer<br/>(4 Pillars: Outcomes, Business, AI, 4D Learning)"]
+
+        RawEmails --> Parser
+        Parser --> LearningScorer --> CoachingEngine
+        Parser --> PvAEngine
+        Parser --> ProductMapper
+        Parser --> AnchorBuilder
+    end
+
+    subgraph Backend["FastAPI Backend (:8765) (app.py)"]
+        FastAPIServer["FastAPI Server (:8765)"]
+        AuthAPIs["Auth Endpoints<br/>(/api/auth/connect, /oauth2callback, /api/status)"]
+        IngestAPIs["Ingest Endpoints<br/>(/api/emails, /api/ingest, /api/raw-emails)"]
+        DashboardAPI["Live Intelligence Endpoint<br/>(GET /api/standup-dashboard)"]
+        SPAFallback["SPA Static Server<br/>(Serves frontend/dist/index.html)"]
+
+        AnalyticsEngine --> DashboardAPI
+        OAuthFlow <--> AuthAPIs
+        Deduplicator <--> IngestAPIs
+        FastAPIServer --- AuthAPIs
+        FastAPIServer --- IngestAPIs
+        FastAPIServer --- DashboardAPI
+        FastAPIServer --- SPAFallback
+        DashboardAPI -. Writes fallback .-> StaticSnapshot
+    end
+
+    subgraph FrontendSPA["React 19 + Vite 6 Single Page App (:5173)"]
+        Router["App Router & Navigation Controller<br/>(/ · /project-tracker · /&lt;developer-slug&gt;)"]
+        DataFetcher["Data Fetcher<br/>(Live /api/standup-dashboard -> Fallback standup-dashboard.json)"]
+
+        subgraph HubPage["Route: / (Standup Hub)"]
+            MatrixView["People × Days Matrix<br/>(Density Toggle, Search, Project & Score Filters,<br/>Raw Email Hover Popover, Pinned Modal)"]
+            PvAView["Plan-vs-Actual View<br/>(Yesterday's Plan vs Today's Work Accountability)"]
+            LearningView["Learning Quality View<br/>(3-Tier Rubric & 1-Click Coaching Copy)"]
+        end
+
+        subgraph TrackerPage["Route: /project-tracker (Portfolio Tracker)"]
+            ProductTracker["ClickUp-Style Tracker<br/>(TRM · ERP · KPTCL · Infra & Security<br/>Gantt Timeline, Status Board, AI Brief)"]
+        end
+
+        subgraph AnchorPage["Route: /&lt;developer-name&gt; (Developer 1:1 Anchor)"]
+            AnchorPillar1["Pillar 1: Two-Way Multi-Owner Outcome Sync<br/>(Iter 1 Reported -> Iter 2 Sync -> Iter 3 Outcome)"]
+            AnchorPillar2["Pillar 2: Utility Business Alignment<br/>(GESCOM, HESCOM, TCED, BWSSB, CMRL Impact)"]
+            AnchorPillar3["Pillar 3: Deeper AI Usage & Agent Playbooks<br/>(L1-L4 Maturity, Telemetry, Role Prompts)"]
+            AnchorPillar4["Pillar 4: 4D Personal Learning Rubric<br/>(Tech, Domain, Craft, Signal Upgrades & Goals)"]
+        end
+
+        FastAPIServer -. REST / API Proxy .-> DataFetcher
+        StaticSnapshot -. Offline Static Fallback .-> DataFetcher
+        DataFetcher --> Router
+        Router --> HubPage
+        Router --> TrackerPage
+        Router --> AnchorPage
+        AnchorPage <--> BrowserStorage
+    end
+```
+
+### End-to-End Data Pipeline & Sequence
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Sumukh as Lead / Manager (Sumukh)
+    actor Dev as Engineer (10 Developers)
+    participant Gmail as Google Workspace (Gmail)
+    participant Ingest as gmail_service.py
+    participant File as raw-emails.md
+    participant Analyzer as standup_analyzer.py
+    participant API as FastAPI (:8765)
+    participant SPA as React Frontend (:5173)
+
+    Dev->>Gmail: Send daily standup email
+    Sumukh->>Gmail: Send reply / coaching nudge / directive
+    Note over Ingest,Gmail: Read-Only OAuth2 Flow (/api/emails)
+    Ingest->>Gmail: Fetch messages within date window
+    Gmail-->>Ingest: Return MIME messages
+    Ingest->>Ingest: Convert HTML to Markdown & unwrap lines
+    Ingest->>File: Idempotent append with <!-- gmail-id: ... -->
+    
+    SPA->>API: GET /api/standup-dashboard
+    alt FastAPI backend active
+        API->>Analyzer: parse_standup_dashboard()
+        Analyzer->>File: Read raw-emails.md
+        Analyzer->>Analyzer: Extract sections, score learnings, pair PvA, map products, synthesize 1:1 anchors
+        Analyzer-->>API: Return complete structured JSON
+        API-->>SPA: JSON Response
+    else FastAPI offline (Static Hosting)
+        SPA->>SPA: Fallback to /standup-dashboard.json
+    end
+
+    SPA->>SPA: Render Matrix (/), Product Tracker (/project-tracker), or Developer Anchor (/<name>)
+```
+
+---
+
+## 2. Repository Architecture & Directory Layout
 
 ```text
 standup-dashboard/
